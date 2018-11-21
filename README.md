@@ -1,1 +1,1 @@
-# ioet-skills-ui
+# bpm-skills-ui
