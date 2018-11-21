@@ -1,5 +1,5 @@
 import configureMockStore from 'redux-mock-store';
-import { ApiClient } from 'swagger_bpm_people_api';
+import { ApiClient } from 'swagger_bpm_categories_api';
 import thunk from 'redux-thunk';
 import expect from 'expect';
 import nock from 'nock';
@@ -20,12 +20,14 @@ describe('actions', () => {
       {
         id: 'someId',
         name: 'Category Name',
-        authentication_identity: 'test@mail.com',
+        business_value: 1,
+        predictive_value: 2.1,
       },
       {
         id: 'someOtherId',
         name: 'Other Category Name',
-        authentication_identity: 'otherTest@mail.com',
+        business_value: 2.1,
+        predictive_value: 1,
       },
     ];
     const expectedAction = {
@@ -40,11 +42,12 @@ describe('actions', () => {
     const category = {
       id: 'someId',
       name: 'Category Name',
-      authentication_identity: 'test@email.com',
+      business_value: 1,
+      predictive_value: 2,
     };
     const expectedAction = {
       type: types.CategoryAction.ADD_CATEGORY,
-      category: category,
+      category,
     };
     expect(actions.addCategory(category))
       .toEqual(expectedAction);
@@ -94,7 +97,7 @@ describe('actions', () => {
     const expectedAction = {
       type: types.DeleteAction.SHOW_DIALOG,
       open: true,
-      categoryIds: categoryIds,
+      categoryIds,
     };
     expect(actions.showDeleteDialog(categoryIds))
       .toEqual(expectedAction);
@@ -141,7 +144,8 @@ describe('actions', () => {
     const categoryToUpdate = {
       id: 'someId',
       name: 'Category Name',
-      authentication_identity: 'test@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const expectedAction = {
       type: types.CategoryAction.UPDATE,
@@ -181,23 +185,24 @@ describe('actions', () => {
 });
 
 describe('async actions', () => {
-
   it('creates ADD_CATEGORIES when getting all categories was successful', () => {
     const getPeopleMock = [
       {
         id: 'someId',
         name: 'Category Name',
-        authentication_identity: 'test@mail.com',
+        business_value: 1,
+        predictive_value: 2.1,
       },
       {
         id: 'someOtherId',
         name: 'Other Category Name',
-        authentication_identity: 'otherTest@mail.com',
+        business_value: 2.1,
+        predictive_value: 1,
       },
     ];
 
     nock(peopleApiClient.basePath)
-      .get('/people')
+      .get('/skills-categories')
       .reply(200, getPeopleMock);
 
     const expectedActions = [
@@ -218,7 +223,7 @@ describe('async actions', () => {
 
   it('creates ADD_CATEGORIES when getting all categories was NOT successful', () => {
     nock(peopleApiClient.basePath)
-      .get('/people')
+      .get('/skills-categories')
       .reply(404);
 
     const expectedActions = [
@@ -241,11 +246,12 @@ describe('async actions', () => {
     const createCategoryMock = {
       id: 'someId',
       name: 'Category Name',
-      authentication_identity: 'test@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     nock(peopleApiClient.basePath)
-      .post('/people')
+      .post('/skills-categories')
       .reply(404);
 
     const expectedActions = [
@@ -268,11 +274,12 @@ describe('async actions', () => {
     const removeCategoryMock = {
       id: 'someId',
       name: 'Category Name',
-      authentication_identity: 'test@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     nock(peopleApiClient.basePath)
-      .delete(`/people/${removeCategoryMock.id}`)
+      .delete(`/skills-categories/${removeCategoryMock.id}`)
       .reply(204);
 
     const expectedActions = [
@@ -299,11 +306,12 @@ describe('async actions', () => {
     const removeCategoryMock = {
       id: 'someId',
       name: 'Category Name',
-      authentication_identity: 'test@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     nock(peopleApiClient.basePath)
-      .delete('/people')
+      .delete('/skills-categories')
       .reply(404);
 
     const expectedActions = [
@@ -326,16 +334,18 @@ describe('async actions', () => {
     const updatedCategoryMock = {
       id: 'someId',
       name: 'New Category Name',
-      authentication_identity: 'newTest@mail.com',
+      business_value: 1,
+      predictive_value: 2.1,
     };
     const categoryToUpdate = {
       id: 'someId',
       name: 'Old Category Name',
-      authentication_identity: 'oldTest@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     nock(peopleApiClient.basePath)
-      .put(`/people/${categoryToUpdate.id}`)
+      .put(`/skills-categories/${categoryToUpdate.id}`)
       .reply(200, updatedCategoryMock);
 
     const expectedActions = [
@@ -373,16 +383,18 @@ describe('async actions', () => {
     const updatedCategoryMock = {
       id: 'someId',
       name: 'New Category Name',
-      authentication_identity: 'newTest@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const categoryToUpdate = {
       id: 'someId',
       name: 'Old Category Name',
-      authentication_identity: 'oldTest@mail.com',
+      business_value: 1,
+      predictive_value: 2.1,
     };
 
     nock(peopleApiClient.basePath)
-      .put(`/people/${categoryToUpdate.id}`)
+      .put(`/skills-categories/${categoryToUpdate.id}`)
       .reply(200, updatedCategoryMock);
 
     const expectedActions = [
@@ -419,26 +431,34 @@ describe('async actions', () => {
       });
   });
 
-  it('creates some actions when updating a categories email with an invalid email', () => {
+  it('creates some actions when updating a category\'s business value with an invalid value', () => {
     const updatedCategoryMock = {
       id: 'someId',
       name: 'New Category Name',
-      authentication_identity: 'newTest@mail@.com',
+      // business_value: 'a',
+      // business_value: 'aa',
+      // business_value: '1a',
+      // business_value: 'a1',
+      // business_value: 'a.1'
+      business_value: '1.a',
+      // business_value: ' ',
+      predictive_value: 2,
     };
     const categoryToUpdate = {
       id: 'someId',
       name: 'Old Category Name',
-      authentication_identity: 'oldTest@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     const expectedActions = [
       {
         type: types.MessageAction.SHOW_MESSAGE,
-        message: PromptMessage.ENTER_VALID_EMAIL,
+        message: PromptMessage.ENTER_VALID_BUSINESS_VALUE,
       },
       {
         type: types.InputErrorAction.ADD,
-        field: Variable.AUTHENTICATION_IDENTITY,
+        field: Variable.BUSINESS_VALUE,
       },
     ];
 
@@ -447,7 +467,58 @@ describe('async actions', () => {
         [categoryToUpdate.id]: categoryToUpdate,
       },
       categoryEdit: {
-        authentication_identity: updatedCategoryMock.authentication_identity,
+        id: updatedCategoryMock.id,
+        name: updatedCategoryMock.name,
+        business_value: updatedCategoryMock.business_value,
+        predictive_value: updatedCategoryMock.predictive_value,
+      },
+    });
+
+    store.dispatch(actions.updateCategoryAsync(categoryToUpdate.id));
+    expect(store.getActions())
+      .toEqual(expectedActions);
+  });
+
+  it('creates some actions when updating a category\'s predictive value with an invalid value', () => {
+    const updatedCategoryMock = {
+      id: 'someId',
+      name: 'New Category Name',
+      business_value: 2,
+      // predictive_value: 'a',
+      // predictive_value: 'aa',
+      // predictive_value: '1a',
+      // predictive_value: 'a1',
+      // predictive_value: 'a.1',
+      predictive_value: '1.a',
+      // predictive_value: ' ',
+    };
+    const categoryToUpdate = {
+      id: 'someId',
+      name: 'Old Category Name',
+      business_value: 1.2,
+      predictive_value: 2,
+    };
+
+    const expectedActions = [
+      {
+        type: types.MessageAction.SHOW_MESSAGE,
+        message: PromptMessage.ENTER_VALID_PREDICTIVE_VALUE,
+      },
+      {
+        type: types.InputErrorAction.ADD,
+        field: Variable.PREDICTIVE_VALUE,
+      },
+    ];
+
+    const store = mockStore({
+      categoryList: {
+        [categoryToUpdate.id]: categoryToUpdate,
+      },
+      categoryEdit: {
+        id: updatedCategoryMock.id,
+        name: updatedCategoryMock.name,
+        business_value: updatedCategoryMock.business_value,
+        predictive_value: updatedCategoryMock.predictive_value,
       },
     });
 
@@ -460,11 +531,12 @@ describe('async actions', () => {
     const categoryToUpdate = {
       id: 'someId',
       name: 'Old Category Name',
-      authentication_identity: 'oldTest@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     nock(peopleApiClient.basePath)
-      .put(`/people/${categoryToUpdate.id}`)
+      .put(`/skills-categories/${categoryToUpdate.id}`)
       .reply(404);
 
     const expectedActions = [
@@ -492,7 +564,8 @@ describe('async actions', () => {
     const categoryToUpdate = {
       id: 'someId',
       name: 'Old Category Name',
-      authentication_identity: 'oldTest@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     const expectedActions = [
@@ -619,16 +692,18 @@ describe('async actions', () => {
     const updatedCategoryMock = {
       id: 'someId',
       name: 'New Category Name',
-      authentication_identity: 'newTest@mail.com',
+      business_value: 1,
+      predictive_value: 2.1,
     };
     const categoryToUpdate = {
       id: 'someId',
       name: 'Old Category Name',
-      authentication_identity: 'oldTest@mail.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     nock(peopleApiClient.basePath)
-      .put(`/people/${categoryToUpdate.id}`)
+      .put(`/skills-categories/${categoryToUpdate.id}`)
       .reply(200, updatedCategoryMock);
 
     const expectedActions = [
@@ -667,11 +742,12 @@ describe('async actions', () => {
     const createCategoryMock = {
       id: getCategoryToBeCreated().id,
       name: 'someName',
-      authentication_identity: 'someValid@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     nock(peopleApiClient.basePath)
-      .post('/people')
+      .post('/skills-categories')
       .reply(200, createCategoryMock);
 
     const expectedActions = [
@@ -735,7 +811,8 @@ describe('async actions', () => {
     const categoryToBeStoppedEditing = {
       id: 'someEditCategoryId',
       name: 'someName',
-      authentication_identity: 'some@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     const expectedActions = [
@@ -764,7 +841,8 @@ describe('async actions', () => {
     const categoryToBeDeleted = {
       id: 'someIdToDelete',
       name: 'someCategoryName',
-      authentication_identity: 'some@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
 
     const expectedActions = [

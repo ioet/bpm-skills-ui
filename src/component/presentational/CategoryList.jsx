@@ -167,8 +167,8 @@ CategoryList.propTypes = {
   categoryList: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    business_value: PropTypes.string.isRequired,
-    predictive_value: PropTypes.string.isRequired,
+    business_value: PropTypes.number.isRequired,
+    predictive_value: PropTypes.number.isRequired,
   })).isRequired,
   onRemoveCategories: PropTypes.func.isRequired,
 };

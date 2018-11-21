@@ -1,8 +1,8 @@
 /* eslint-disable camelcase,prefer-destructuring */
-import { CategoryControllerApi, Category } from 'swagger_bpm_categories_api';
-import { getCategoryToBeCreated, validateEmail } from './component/utils/Utils';
+import { Category, CategoryControllerApi } from 'swagger_bpm_categories_api';
+import { getCategoryToBeCreated } from './component/utils/Utils';
 import {
-  DeleteAction, HoverAction, InputErrorAction, MessageAction, CategoryAction,
+  CategoryAction, DeleteAction, HoverAction, InputErrorAction, MessageAction,
 } from './action-types';
 import {
   ErrorMessage, NotificationMessage, PromptMessage, Variable,
@@ -104,27 +104,23 @@ export const getAllCategoriesAsync = () => (
 
 export const validateField = input => (typeof input !== 'undefined' && input !== '');
 
-export function validateDouble(double) {
-  const re = /((\d)?)+(\.(\d)+)?/;
-  return re.test(double);
-}
-
 export const validateInputWithErrorMessages = (dispatch, category) => {
+  const reDouble = /^\d{0,2}(?:\.\d{0,2}){0,1}$/;
   if (!validateField(category.name)) {
     dispatch(showMessage(PromptMessage.ENTER_VALID_NAME));
     dispatch(setInputError(Variable.NAME));
     return false;
   }
 
-  if (!validateDouble(category.business_value)) {
-    dispatch(showMessage(PromptMessage.ENTER_VALID_BUSINESS_VALUE));
-    dispatch(setInputError(Variable.BUSINESS_VALUE));
+  if (category.predictive_value.toString().match(reDouble) === null) {
+    dispatch(showMessage(PromptMessage.ENTER_VALID_PREDICTIVE_VALUE));
+    dispatch(setInputError(Variable.PREDICTIVE_VALUE));
     return false;
   }
 
-  if (!validateDouble(category.predictive_value)) {
-    dispatch(showMessage(PromptMessage.ENTER_VALID_PREDICTIVE_VALUE));
-    dispatch(setInputError(Variable.PREDICTIVE_VALUE));
+  if (category.business_value.toString().match(reDouble) === null) {
+    dispatch(showMessage(PromptMessage.ENTER_VALID_BUSINESS_VALUE));
+    dispatch(setInputError(Variable.BUSINESS_VALUE));
     return false;
   }
 
@@ -229,7 +225,8 @@ export const editUpdateOrCreateCategory = categoryId => (
 export const removeCategoryAsync = categoryId => (
   (dispatch, getState) => categoryApi.deleteCategoryUsingDELETE(categoryId)
     .then(() => {
-      dispatch(showMessage(getState().categoryList[categoryId].name + NotificationMessage.CATEGORY_DELETED_SUCCESSFULLY));
+      dispatch(showMessage(getState().categoryList[categoryId].name
+          + NotificationMessage.CATEGORY_DELETED_SUCCESSFULLY));
       dispatch(removeCategory(categoryId));
     })
     .catch((error) => {

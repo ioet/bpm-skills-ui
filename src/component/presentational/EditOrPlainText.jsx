@@ -37,12 +37,13 @@ const EditOrPlainText = (props) => {
 
 EditOrPlainText.defaultProps = {
   inputError: false,
+  editId: undefined,
 };
 
 EditOrPlainText.propTypes = {
-  value: PropTypes.string.isRequired,
-  editId: PropTypes.string.isRequired,
-  caegoryId: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  editId: PropTypes.string,
+  categoryId: PropTypes.string.isRequired,
   inputError: PropTypes.bool,
   onCategoryEdit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,

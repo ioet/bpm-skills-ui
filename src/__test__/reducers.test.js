@@ -137,7 +137,8 @@ describe('categoryEdit reducer', () => {
       .toEqual({
         editing: false,
         name: null,
-        authentication_identity: null,
+        business_value: null,
+        predictive_value: null,
       });
   });
 });
@@ -219,7 +220,8 @@ describe('categoryList reducer', () => {
     const someCategory = {
       id: 'someId',
       name: 'someName',
-      authentication_identity: 'some@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const addOneCategoryAction = {
       type: types.CategoryAction.ADD_CATEGORY,
@@ -235,12 +237,14 @@ describe('categoryList reducer', () => {
     const someCategory = {
       id: 'someId',
       name: 'someName',
-      authentication_identity: 'some@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const someOtherCategory = {
       id: 'someOtherId',
       name: 'someOtherName',
-      authentication_identity: 'someOther@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const addMultipleCategorysAction = {
       type: types.CategoryAction.ADD_CATEGORIES,
@@ -257,12 +261,14 @@ describe('categoryList reducer', () => {
     const someCategory = {
       id: 'someId',
       name: 'someName',
-      authentication_identity: 'some@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const someCategoryUpdated = {
       id: 'someId',
       name: 'someUpdatedName',
-      authentication_identity: 'someUpdated@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const updateCategoryAction = {
       type: types.CategoryAction.UPDATE,
@@ -280,7 +286,8 @@ describe('categoryList reducer', () => {
     const someCategoryToBeRemoved = {
       id: 'someId',
       name: 'someName',
-      authentication_identity: 'some@email.com',
+      business_value: 1.2,
+      predictive_value: 2,
     };
     const removeCategoryAction = {
       type: types.CategoryAction.REMOVE,
