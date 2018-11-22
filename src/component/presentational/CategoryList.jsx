@@ -75,9 +75,6 @@ const CategoryList = (props) => {
     {
       name: CategoryListConst.COLUMN_3,
       options: {
-        filter: false,
-        sort: false,
-        download: false,
         customBodyRender: (value, tableMeta) => {
           const category = getCategoryObjectFromArray(tableMeta.rowData);
           return (
