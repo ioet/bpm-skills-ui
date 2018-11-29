@@ -1,5 +1,5 @@
 {
   "useES6": true,
   "usePromises": true,
-  "projectName": "swagger_bpm_skills_api"
+  "projectName": "swagger_bpm_categories_api"
 }

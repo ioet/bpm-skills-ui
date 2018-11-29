@@ -4,7 +4,7 @@ import MyTableCell from '../presentational/MyTableCell';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMouseOver: () => {
-    dispatch(hoverOver(ownProps.skillId));
+    dispatch(hoverOver(ownProps.categoryId));
   },
   onMouseOut: () => {
     dispatch(hoverOut());

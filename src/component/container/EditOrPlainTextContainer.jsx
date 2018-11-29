@@ -1,22 +1,23 @@
 import { connect } from 'react-redux';
-import { editUpdateOrCreateSkill, setSkillEditData } from '../../actions';
+import { editUpdateOrCreateCategory, setCategoryEditData } from '../../actions';
 import EditOrPlainText from '../presentational/EditOrPlainText';
+import { getEditId, getInputError } from '../../selectors';
 
 const mapStateToProps = (state, ownProps) => ({
-  editId: (typeof state.skillEdit.id === 'undefined') ? '' : state.skillEdit.id,
-  inputError: state.inputError[ownProps.name],
-  skillId: ownProps.skillId,
+  editId: getEditId(state),
+  inputError: getInputError(state, ownProps),
+  categoryId: ownProps.categoryId,
   value: ownProps.value,
   name: ownProps.name,
   label: ownProps.label,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSkillEdit: () => {
-    dispatch(editUpdateOrCreateSkill(ownProps.skillId));
+  onCategoryEdit: () => {
+    dispatch(editUpdateOrCreateCategory(ownProps.categoryId));
   },
   onChange: (event) => {
-    dispatch(setSkillEditData(event.target.name, event.target.value));
+    dispatch(setCategoryEditData(event.target.name, event.target.value));
   },
 });
 

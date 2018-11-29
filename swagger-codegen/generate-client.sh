@@ -9,7 +9,7 @@ swaggerConfig="config.json";
 generatedCodeDir="generated_swagger_client";
 
 helpPage() {
-    echo "Generates the client code for bpm-skills-api";
+    echo "Generates the client code for bpm-categories-api";
     echo "Usage: without any arguments if will use swagger.json and config.json from this directory";
     echo "       $(pwd)/${scripDir}";
     echo "";

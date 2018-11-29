@@ -1,4 +1,10 @@
-export function compareSkillsByFirstName(a, b) {
+/* eslint-disable max-len */
+export function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+export function compareCategoriesByFirstName(a, b) {
   if (a[1].toLowerCase() < b[1].toLowerCase()) {
     return -1;
   }
@@ -8,25 +14,27 @@ export function compareSkillsByFirstName(a, b) {
   return 0;
 }
 
-export const arrayToObject = (array, keyField) => (
-  array.reduce((obj, item) => {
-    obj[item[keyField]] = item;
+export const arrayToCategoryObject = (array, keyField) => (
+  array.reduce((obj, category) => {
+    obj[category[keyField]] = category;
     return obj;
   }, {})
 );
 
-export const getSkillToBeCreated = () => (
+export const getCategoryToBeCreated = () => (
   {
-    skillToBeCreated: {
-      id: 'skillToBeCreated',
-      name: '',
-    },
+    id: 'categoryToBeCreated',
+    name: '',
+    business_value: '',
+    predictive_value: '',
   }
 );
 
-export function getSkillObjectFromArray(skill) {
+export function getCategoryObjectFromArray(category) {
   return {
-    id: skill[0],
-    name: skill[1],
+    id: category[0],
+    name: category[1],
+    business_value: category[2],
+    predictive_value: category[3],
   };
 }

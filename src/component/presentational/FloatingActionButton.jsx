@@ -8,7 +8,7 @@ import { TooltipConst } from '../../constants';
 
 const FloatingActionButton = (props) => {
   const {
-    classes, tooltip, icon, createSkill,
+    classes, tooltip, icon, createCategory,
   } = props;
 
   return (
@@ -24,7 +24,7 @@ const FloatingActionButton = (props) => {
         color="secondary"
         onClick={(e) => {
           e.preventDefault();
-          createSkill();
+          createCategory();
         }}
       >
         {icon}
@@ -37,7 +37,7 @@ FloatingActionButton.propTypes = {
   classes: PropTypes.object.isRequired,
   tooltip: PropTypes.string.isRequired,
   icon: PropTypes.element.isRequired,
-  createSkill: PropTypes.func.isRequired,
+  createCategory: PropTypes.func.isRequired,
 };
 
 export default withStyles(FabStyles)(FloatingActionButton);

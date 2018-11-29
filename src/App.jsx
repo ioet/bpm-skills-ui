@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography/Typography';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
-import SkillListContainer from './component/container/SkillListContainer';
+import CategoryListContainer from './component/container/CategoryListContainer';
 import ErrorSnackbarContainer from './component/container/ErrorSnackbarContainer';
 import Footer from './component/presentational/Footer';
 import { AppConst } from './constants';
@@ -19,7 +19,7 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <SkillListContainer />
+      <CategoryListContainer />
       <Footer />
       <FloatingActionButtonContainer />
       <ErrorSnackbarContainer />

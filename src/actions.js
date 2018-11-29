@@ -1,48 +1,45 @@
 /* eslint-disable camelcase,prefer-destructuring */
-import { SkillControllerApi, Skill } from 'swagger_bpm_skills_api';
-import { getSkillToBeCreated } from './component/utils/Utils';
+import { Category, CategoryControllerApi } from 'swagger_bpm_categories_api';
+import { getCategoryToBeCreated } from './component/utils/Utils';
 import {
-  DeleteAction, HoverAction, InputErrorAction, MessageAction, SkillAction,
+  CategoryAction, DeleteAction, HoverAction, InputErrorAction, MessageAction,
 } from './action-types';
 import {
   ErrorMessage, NotificationMessage, PromptMessage, Variable,
 } from './constants';
+import { getEditId } from './selectors';
 
-const skillApi = new SkillControllerApi();
+const categoryApi = new CategoryControllerApi();
 
-const addSkills = allSkills => ({
-  type: SkillAction.ADD_SKILLS,
-  skill: allSkills,
+export const addCategories = allCategories => ({
+  type: CategoryAction.ADD_CATEGORIES,
+  category: allCategories,
 });
-export const addSkill = oneSkill => ({
-  type: SkillAction.ADD_SKILL,
-  id: oneSkill.id,
-  name: oneSkill.name,
+export const addCategory = oneCategory => ({
+  type: CategoryAction.ADD_CATEGORY,
+  category: oneCategory,
 });
 
-const setInputError = field => ({
+export const setInputError = field => ({
   type: InputErrorAction.ADD,
   field,
 });
-const removeAllInputErrors = () => ({
+export const removeAllInputErrors = () => ({
   type: InputErrorAction.REMOVE_ALL,
 });
 
 export const showMessage = errorMessage => ({
-  type: MessageAction.MESSAGE,
-  open: true,
+  type: MessageAction.SHOW_MESSAGE,
   message: errorMessage,
 });
 export const hideMessage = () => ({
-  type: MessageAction.MESSAGE,
-  open: false,
-  message: '',
+  type: MessageAction.HIDE_MESSAGE,
 });
 
-export const showDeleteDialog = skillIds => ({
+export const showDeleteDialog = categoryIds => ({
   type: DeleteAction.SHOW_DIALOG,
   open: true,
-  skillIds,
+  categoryIds,
 });
 export const hideDeleteDialog = () => ({
   type: DeleteAction.HIDE_DIALOG,
@@ -50,166 +47,199 @@ export const hideDeleteDialog = () => ({
 });
 
 export const addEmptyRow = () => ({
-  type: SkillAction.ADD_EMPTY_ROW,
+  type: CategoryAction.ADD_EMPTY_ROW,
 });
 
 export const removeEmptyRow = () => ({
-  type: SkillAction.REMOVE_EMPTY_ROW,
+  type: CategoryAction.REMOVE_EMPTY_ROW,
 });
 
-export const startEditSkill = editSkillId => ({
-  type: SkillAction.EDIT_START,
-  id: editSkillId,
+export const startEditCategory = editCategoryId => ({
+  type: CategoryAction.EDIT_START,
+  id: editCategoryId,
 });
-export const setSkillEditData = (field, name) => ({
-  type: SkillAction.EDIT_DATA,
+export const setCategoryEditData = (field, value) => ({
+  type: CategoryAction.EDIT_DATA,
   field,
-  name,
+  value,
 });
-export const endEditSkill = () => ({
-  type: SkillAction.EDIT_END,
+export const endEditCategory = () => ({
+  type: CategoryAction.EDIT_END,
 });
 
-export const startCreateSkill = () => (
+export const startCreateCategory = () => (
   (dispatch) => {
     dispatch(addEmptyRow());
-    dispatch(startEditSkill(getSkillToBeCreated().skillToBeCreated.id));
+    dispatch(startEditCategory(getCategoryToBeCreated().id));
   }
 );
 
-export const endCreateSkill = () => (
+export const endCreateCategory = () => (
   (dispatch) => {
     dispatch(removeEmptyRow());
-    dispatch(endEditSkill());
+    dispatch(endEditCategory());
   }
 );
 
-export const setUpdateSkill = skillToUpdate => ({
-  type: SkillAction.UPDATE,
-  skill: skillToUpdate,
+export const setUpdateCategory = categoryToUpdate => ({
+  type: CategoryAction.UPDATE,
+  category: categoryToUpdate,
 });
 
-const removeSkill = skillId => ({
-  type: SkillAction.REMOVE,
-  skillId,
+export const removeCategory = categoryId => ({
+  type: CategoryAction.REMOVE,
+  categoryId,
 });
 
-export const getAllSkillsAsync = () => (
-  dispatch => skillApi.getAllSkillsUsingGET()
+export const getAllCategoriesAsync = () => (
+  dispatch => categoryApi.getAllCategoriesUsingGET()
     .then((data) => {
-      dispatch(addSkills(data));
+      dispatch(addCategories(data));
     })
     .catch((error) => {
-      dispatch(showMessage(`${ErrorMessage.FAILED_TO_LOAD_SKILLS}: ${error}`));
+      // console.log(error); find a way to log this error
+      dispatch(showMessage(ErrorMessage.FAILED_TO_LOAD_CATEGORIES));
     })
 );
+export const validateField = input => (typeof input !== 'undefined' && input !== '');
 
-const validateField = input => !(typeof input === 'undefined' || input === '');
-
-const validateInputWithErrorMessages = (dispatch, skill) => {
-  if (!validateField(skill.name)) {
+export const validateInputWithErrorMessages = (dispatch, category) => {
+  const reDouble = /^\d{0,2}(?:\.\d{0,2}){0,1}$/;
+  if (!validateField(category.name)) {
     dispatch(showMessage(PromptMessage.ENTER_VALID_NAME));
     dispatch(setInputError(Variable.NAME));
     return false;
   }
+
+  if (category.predictive_value.toString().match(reDouble) === null) {
+    dispatch(showMessage(PromptMessage.ENTER_VALID_PREDICTIVE_VALUE));
+    dispatch(setInputError(Variable.PREDICTIVE_VALUE));
+    return false;
+  }
+
+  if (category.business_value.toString().match(reDouble) === null) {
+    dispatch(showMessage(PromptMessage.ENTER_VALID_BUSINESS_VALUE));
+    dispatch(setInputError(Variable.BUSINESS_VALUE));
+    return false;
+  }
+
   return true;
 };
 
-const createSkillAsync = () => (
+export const createCategoryAsync = () => (
   (dispatch, getState) => {
-    const { name } = getState().skillEdit;
+    const { name, business_value, predictive_value } = getState().categoryEdit;
 
-    if (!validateInputWithErrorMessages(dispatch, getState().skillEdit)) return null;
+    if (!validateInputWithErrorMessages(dispatch, getState().categoryEdit)) return null;
 
-    const skillToCreate = new Skill();
-    skillToCreate.name = name;
-    return skillApi.createSkillUsingPOST(skillToCreate)
+    const categoryToCreate = new Category();
+    categoryToCreate.name = name;
+    categoryToCreate.business_value = business_value;
+    categoryToCreate.predictive_value = predictive_value;
+    return categoryApi.createCategoryUsingPOST(categoryToCreate)
       .then((data) => {
         dispatch(removeAllInputErrors());
-        dispatch(endCreateSkill());
-        dispatch(addSkill(data));
-        dispatch(showMessage(data.name + NotificationMessage.SKILL_CREATED_SUCCESSFULLY));
+        dispatch(endCreateCategory());
+        dispatch(addCategory(data));
+        dispatch(showMessage(data.name + NotificationMessage.CATEGORY_CREATED_SUCCESSFULLY));
       })
       .catch((error) => {
-        dispatch(showMessage(`${ErrorMessage.FAILED_TO_CREATE_SKILL}: ${error}`));
+        // console.log(error); find a way to log this error
+        dispatch(showMessage(ErrorMessage.FAILED_TO_CREATE_CATEGORY));
       });
   }
 );
 
-const updateSkillAsync = skillId => (
+export const updateCategoryAsync = categoryId => (
   (dispatch, getState) => {
-    const { id } = getState().skillEdit;
-    const skill = getState().skillList[skillId];
-    let { name } = getState().skillEdit;
+    const { id } = getState().categoryEdit;
+    const category = getState().categoryList[categoryId];
+    let {
+      name, business_value, predictive_value,
+    } = getState().categoryEdit;
 
-    if (typeof name === 'undefined') {
+    if (typeof name === 'undefined' && typeof business_value === 'undefined'
+          && typeof predictive_value === 'undefined') {
       dispatch(removeAllInputErrors());
-      return dispatch(endEditSkill());
+      return dispatch(endEditCategory());
     }
 
     if (typeof name === 'undefined') {
-      name = skill.name;
+      name = category.name;
+    }
+    if (typeof business_value === 'undefined') {
+      business_value = category.business_value;
+    }
+    if (typeof predictive_value === 'undefined') {
+      predictive_value = category.predictive_value;
     }
 
     if (!validateInputWithErrorMessages(dispatch, {
       name,
+      business_value,
+      predictive_value,
     })) {
       return null;
     }
 
-    const skillToUpdate = new Skill();
-    skillToUpdate.name = name;
-    return skillApi.updateSkillUsingPUT(id, skillToUpdate)
+    const categoryToUpdate = new Category();
+    categoryToUpdate.name = name;
+    categoryToUpdate.business_value = business_value;
+    categoryToUpdate.predictive_value = predictive_value;
+    return categoryApi.updateCategoryUsingPUT(categoryToUpdate, id)
       .then((data) => {
         dispatch(removeAllInputErrors());
-        dispatch(endEditSkill());
-        dispatch(setUpdateSkill(data));
+        dispatch(endEditCategory());
+        dispatch(setUpdateCategory(data));
         dispatch(showMessage(NotificationMessage.CHANGES_UPDATED_SUCCESSFULLY));
       })
       .catch((error) => {
-        dispatch(showMessage(`${ErrorMessage.FAILED_TO_UPDATE_SKILL}: ${error}`));
+        // console.log(error); // find a way to log this error
+        dispatch(showMessage(ErrorMessage.FAILED_TO_UPDATE_CATEGORY));
       });
   }
 );
 
-export const editUpdateOrCreateSkill = skillId => (
+export const editUpdateOrCreateCategory = categoryId => (
   (dispatch, getState) => {
-    const skillEditId = getState().skillEdit.id;
+    const categoryEditId = getEditId(getState());
 
-    if (typeof skillEditId !== 'undefined') {
-      if (skillEditId === skillId) {
-        if (skillEditId === getSkillToBeCreated().skillToBeCreated.id) {
-          return dispatch(createSkillAsync());
+    if (typeof categoryEditId !== 'undefined') {
+      if (categoryEditId === categoryId) {
+        if (categoryEditId === getCategoryToBeCreated().id) {
+          return dispatch(createCategoryAsync());
         }
-        return dispatch(updateSkillAsync(skillId));
+        return dispatch(updateCategoryAsync(categoryId));
       }
-      if (skillEditId === getSkillToBeCreated().skillToBeCreated.id) {
+      if (categoryEditId === getCategoryToBeCreated().id) {
         dispatch(showMessage(NotificationMessage.CHANGES_DISCARDED));
         dispatch(removeAllInputErrors());
-        dispatch(endCreateSkill());
+        dispatch(endCreateCategory());
       }
     }
-    return dispatch(startEditSkill(skillId));
+    return dispatch(startEditCategory(categoryId));
   }
 );
 
-export const removeSkillAsync = skillId => (
-  (dispatch, getState) => skillApi.deleteSkillUsingDELETE(skillId)
+export const removeCategoryAsync = categoryId => (
+  (dispatch, getState) => categoryApi.deleteCategoryUsingDELETE(categoryId)
     .then(() => {
-      dispatch(showMessage(getState().skillList[skillId].name + NotificationMessage.SKILL_DELETED_SUCCESSFULLY));
-      dispatch(removeSkill(skillId));
+      dispatch(showMessage(getState().categoryList[categoryId].name
+              + NotificationMessage.CATEGORY_DELETED_SUCCESSFULLY));
+      dispatch(removeCategory(categoryId));
     })
     .catch((error) => {
-      dispatch(showMessage(`${ErrorMessage.FAILED_TO_REMOVE_SKILL}: ${error}`));
+      // console.log(error); find a way to log this error
+      dispatch(showMessage(ErrorMessage.FAILED_TO_REMOVE_CATEGORY));
     })
 );
 
-export const clearSkill = creating => (
+export const clearCategory = creating => (
   (dispatch) => {
     if (creating) {
-      dispatch(endCreateSkill());
+      dispatch(endCreateCategory());
     } else {
-      dispatch(endEditSkill());
+      dispatch(endEditCategory());
     }
 
     dispatch(removeAllInputErrors());
@@ -217,22 +247,22 @@ export const clearSkill = creating => (
   }
 );
 
-export const startOrEndCreateSkill = () => (
+export const startOrEndCreateCategory = () => (
   (dispatch, getState) => {
-    if (!getState().skillEdit.editing) {
-      dispatch(startCreateSkill());
+    if (!getState().categoryEdit.editing) {
+      dispatch(startCreateCategory());
     } else {
-      dispatch(clearSkill(true));
+      dispatch(clearCategory(true));
     }
   }
 );
 
-export const clearOrShowDelete = skillIds => (
+export const clearOrShowDelete = categoryIds => (
   (dispatch, getState) => {
-    if (skillIds[0] === getState().skillEdit.id) {
-      dispatch(clearSkill(skillIds[0] === getSkillToBeCreated().skillToBeCreated.id));
+    if (categoryIds[0] === getState().categoryEdit.id) {
+      dispatch(clearCategory(categoryIds[0] === getCategoryToBeCreated().id));
     } else {
-      dispatch(showDeleteDialog(skillIds));
+      dispatch(showDeleteDialog(categoryIds));
     }
   }
 );

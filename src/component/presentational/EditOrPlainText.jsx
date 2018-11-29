@@ -4,15 +4,15 @@ import TextField from '@material-ui/core/TextField/TextField';
 
 const EditOrPlainText = (props) => {
   const {
-    value, editId, skillId, inputError, onSkillEdit, onChange, name, label,
+    value, editId, categoryId, inputError, onCategoryEdit, onChange, name, label,
   } = props;
 
   return (
-    (editId === skillId)
+    (editId === categoryId)
       ? (
         <form onSubmit={(e) => {
           e.preventDefault();
-          onSkillEdit();
+          onCategoryEdit();
         }}
         >
           <TextField
@@ -24,7 +24,7 @@ const EditOrPlainText = (props) => {
             onChange={
               (e) => {
                 e.preventDefault();
-                onChange(e, editId);
+                onChange(e);
               }
             }
           />
@@ -37,14 +37,15 @@ const EditOrPlainText = (props) => {
 
 EditOrPlainText.defaultProps = {
   inputError: false,
+  editId: undefined,
 };
 
 EditOrPlainText.propTypes = {
-  value: PropTypes.string.isRequired,
-  editId: PropTypes.string.isRequired,
-  skillId: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  editId: PropTypes.string,
+  categoryId: PropTypes.string.isRequired,
   inputError: PropTypes.bool,
-  onSkillEdit: PropTypes.func.isRequired,
+  onCategoryEdit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,

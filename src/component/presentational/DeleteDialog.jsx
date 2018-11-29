@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button/Button';
 import Slide from '@material-ui/core/Slide/Slide';
 import PropTypes from 'prop-types';
 import { DeleteDialogConst } from '../../constants';
-import { getSkillToBeCreated } from '../utils/Utils';
+import { getCategoryToBeCreated } from '../utils/Utils';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -16,7 +16,7 @@ function Transition(props) {
 
 const DeleteDialog = (props) => {
   const {
-    open, handleClose, skillIds, skillName,
+    open, handleClose, categoryIds, categoryName,
   } = props;
 
   return (
@@ -38,7 +38,7 @@ const DeleteDialog = (props) => {
         <DialogContentText id="alert-dialog-slide-description">
           {DeleteDialogConst.CONTENT_TEXT_1}
           <b>
-            {skillName}
+            {categoryName}
           </b>
           {DeleteDialogConst.CONTENT_TEXT_2}
         </DialogContentText>
@@ -56,7 +56,7 @@ const DeleteDialog = (props) => {
         <Button
           onClick={(e) => {
             e.preventDefault();
-            handleClose(skillIds);
+            handleClose(categoryIds);
           }}
           color="primary"
         >
@@ -68,15 +68,15 @@ const DeleteDialog = (props) => {
 };
 
 DeleteDialog.defaultProps = {
-  skillIds: [getSkillToBeCreated().skillToBeCreated.id],
-  skillName: [getSkillToBeCreated().skillToBeCreated.name],
+  categoryIds: [getCategoryToBeCreated().id],
+  categoryName: [getCategoryToBeCreated().name],
 };
 
 DeleteDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  skillIds: PropTypes.arrayOf(PropTypes.string),
-  skillName: PropTypes.string,
+  categoryIds: PropTypes.arrayOf(PropTypes.string),
+  categoryName: PropTypes.string,
 };
 
 export default DeleteDialog;

@@ -1,20 +1,16 @@
 import { connect } from 'react-redux';
-import { Add, Clear } from '@material-ui/icons';
-import React from 'react';
-import { startOrEndCreateSkill } from '../../actions';
+import { startOrEndCreateCategory } from '../../actions';
 import FloatingActionButton from '../presentational/FloatingActionButton';
-import { FloatingActionButtonConst } from '../../constants';
+import { getFabIcon, getFabTooltip } from '../../selectors';
 
 const mapStateToProps = state => ({
-  tooltip: (state.skillEdit.editing)
-    ? FloatingActionButtonConst.TOOLTIP_DISCARD
-    : FloatingActionButtonConst.TOOLTIP_ADD,
-  icon: (state.skillEdit.editing) ? <Clear /> : <Add />,
+  tooltip: getFabTooltip(state),
+  icon: getFabIcon(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  createSkill: () => {
-    dispatch(startOrEndCreateSkill());
+  createCategory: () => {
+    dispatch(startOrEndCreateCategory());
   },
 });
 

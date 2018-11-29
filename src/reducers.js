@@ -1,23 +1,28 @@
 /* eslint-disable no-plusplus */
 import { combineReducers } from 'redux';
-import { arrayToObject, getSkillToBeCreated } from './component/utils/Utils';
+import { arrayToCategoryObject, getCategoryToBeCreated } from './component/utils/Utils';
 import {
-  DeleteAction, HoverAction, InputErrorAction, MessageAction, SkillAction,
+  DeleteAction, HoverAction, InputErrorAction, MessageAction, CategoryAction,
 } from './action-types';
 
-const message = (state = { open: false }, action) => {
+export const message = (state = { open: false }, action) => {
   switch (action.type) {
-    case MessageAction.MESSAGE:
-      return ({
-        open: action.open,
+    case MessageAction.SHOW_MESSAGE:
+      return {
+        open: true,
         message: action.message,
-      });
+      };
+    case MessageAction.HIDE_MESSAGE:
+      return {
+        open: false,
+        message: '',
+      };
     default:
       return state;
   }
 };
 
-const inputError = (state = {}, action) => {
+export const inputError = (state = {}, action) => {
   switch (action.type) {
     case InputErrorAction.ADD:
       return ({
@@ -31,34 +36,36 @@ const inputError = (state = {}, action) => {
   }
 };
 
-const skillEdit = (state = { editing: false }, action) => {
+export const categoryEdit = (state = { editing: false }, action) => {
   switch (action.type) {
-    case SkillAction.EDIT_START:
+    case CategoryAction.EDIT_START:
       return ({
         id: action.id,
         editing: true,
       });
-    case SkillAction.EDIT_DATA:
+    case CategoryAction.EDIT_DATA:
       return ({
         ...state,
-        [action.field]: action.name,
+        [action.field]: action.value,
       });
-    case SkillAction.EDIT_END:
+    case CategoryAction.EDIT_END:
       return ({
         editing: false,
         name: null,
+        business_value: null,
+        predictive_value: null,
       });
     default:
       return state;
   }
 };
 
-const skillDelete = (state = { open: false }, action) => {
+export const categoryDelete = (state = { open: false }, action) => {
   switch (action.type) {
     case DeleteAction.SHOW_DIALOG:
       return {
         open: true,
-        skillIds: action.skillIds,
+        categoryIds: action.categoryIds,
       };
     case DeleteAction.HIDE_DIALOG:
       return {
@@ -69,56 +76,56 @@ const skillDelete = (state = { open: false }, action) => {
   }
 };
 
-const skill = (state, action) => {
+export const category = (state = {}, action) => {
   switch (action.type) {
-    case SkillAction.ADD_EMPTY_ROW:
-      return getSkillToBeCreated();
-    case SkillAction.ADD_SKILL:
+    case CategoryAction.ADD_EMPTY_ROW:
       return {
-        [action.id]: {
-          id: action.id,
-          name: action.name,
-        },
+        [getCategoryToBeCreated().id]: getCategoryToBeCreated(),
       };
-    case SkillAction.ADD_SKILLS:
-      return arrayToObject(action.skill, 'id');
+    case CategoryAction.ADD_CATEGORY:
+      return {
+        [action.category.id]: action.category,
+      };
+    case CategoryAction.ADD_CATEGORIES:
+      return arrayToCategoryObject(action.category, 'id');
     default:
       return state;
   }
 };
-const skillList = (state = {}, action) => {
+
+export const categoryList = (state = {}, action) => {
   const copy = Object.assign({}, state);
   switch (action.type) {
-    case SkillAction.ADD_EMPTY_ROW:
+    case CategoryAction.ADD_EMPTY_ROW:
       return {
-        ...skill(undefined, action),
+        ...category(undefined, action),
         ...state,
       };
-    case SkillAction.REMOVE_EMPTY_ROW:
-      delete copy[getSkillToBeCreated().skillToBeCreated.id];
+    case CategoryAction.REMOVE_EMPTY_ROW:
+      delete copy[getCategoryToBeCreated().id];
       return { ...copy };
-    case SkillAction.ADD_SKILL:
+    case CategoryAction.ADD_CATEGORY:
       return {
         ...state,
-        ...skill(undefined, action),
+        ...category(undefined, action),
       };
-    case SkillAction.ADD_SKILLS:
+    case CategoryAction.ADD_CATEGORIES:
       return {
         ...state,
-        ...skill(undefined, action),
+        ...category(undefined, action),
       };
-    case SkillAction.UPDATE:
-      copy[action.skill.id] = action.skill;
+    case CategoryAction.UPDATE:
+      copy[action.category.id] = action.category;
       return { ...copy };
-    case SkillAction.REMOVE:
-      delete copy[action.skillId];
+    case CategoryAction.REMOVE:
+      delete copy[action.categoryId];
       return { ...copy };
     default:
       return state;
   }
 };
 
-const hover = (state = { hover: false }, action) => {
+export const hover = (state = { hover: false }, action) => {
   switch (action.type) {
     case HoverAction.OVER:
       return {
@@ -135,11 +142,11 @@ const hover = (state = { hover: false }, action) => {
 };
 
 const rootReducer = combineReducers({
-  skillList,
+  categoryList,
   message,
   inputError,
-  skillEdit,
-  skillDelete,
+  categoryEdit,
+  categoryDelete,
   hover,
 });
 

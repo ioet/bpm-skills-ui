@@ -1,4 +1,4 @@
-# bpm-skills-ui
+# bpm-categories-ui
 
 In order to set up and run the project, follow these steps:
 
@@ -54,10 +54,10 @@ npm test
 ## Docker?
 
 ```
-$ docker build -t bpm-skills-ui .
+$ docker build -t bpm-categories-ui .
 ```
 
 
 ```
-$ docker run -p 8080:8080 bpm-skills-ui
+$ docker run -p 8080:8080 bpm-categories-ui
 ```

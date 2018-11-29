@@ -1,17 +1,18 @@
-export const SkillAction = {
-  ADD_SKILLS: 'SKILL_ADD_SKILLS',
-  ADD_SKILL: 'SKILL_ADD_SKILL',
+export const CategoryAction = {
+  ADD_CATEGORIES: 'CATEGORY_ADD_CATEGORIES',
+  ADD_CATEGORY: 'CATEGORY_ADD_CATEGORY',
   ADD_EMPTY_ROW: 'ADD_EMPTY_ROW',
   REMOVE_EMPTY_ROW: 'REMOVE_EMPTY_ROW',
-  EDIT_START: 'SKILL_EDIT_START',
-  EDIT_END: 'EDIT_END',
-  EDIT_DATA: 'SKILL_EDIT_DATA',
-  UPDATE: 'SKILL_UPDATE',
-  REMOVE: 'SKILL_REMOVE',
+  EDIT_START: 'CATEGORY_EDIT_START',
+  EDIT_END: 'CATEGORY_EDIT_END',
+  EDIT_DATA: 'CATEGORY_EDIT_DATA',
+  UPDATE: 'CATEGORY_UPDATE',
+  REMOVE: 'CATEGORY_REMOVE',
 };
 
 export const MessageAction = {
-  MESSAGE: 'INFO_MESSAGE',
+  SHOW_MESSAGE: 'SHOW_INFO_MESSAGE',
+  HIDE_MESSAGE: 'HIDE_INFO_MESSAGE',
 };
 
 export const InputErrorAction = {
@@ -27,4 +28,8 @@ export const DeleteAction = {
 export const HoverAction = {
   OVER: 'HOVER_OVER',
   OUT: 'HOVER_OUT',
+};
+
+export const InitialAction = {
+  INITIAL_STATE: '@@INIT',
 };

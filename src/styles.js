@@ -1,14 +1,13 @@
 import { createMuiTheme } from '@material-ui/core';
-import { amber, deepPurple } from '@material-ui/core/colors';
+import { pink, blueGrey } from '@material-ui/core/colors';
+
+const primary = blueGrey;
+const secondary = pink;
 
 export const RootTheme = createMuiTheme({
   palette: {
-    primary: {
-      main: '#e53935',
-    },
-    secondary: {
-      main: '#2196f3',
-    },
+    primary,
+    secondary,
   },
   typography: {
     useNextVariants: true,
@@ -24,13 +23,13 @@ export const RootTheme = createMuiTheme({
     },
     MuiCheckbox: {
       checked: {
-        color: `${amber.A400} !important`,
+        color: `${secondary.A400} !important`,
       },
     },
     MUIDataTableToolbar: {
       icon: {
         '&:hover': {
-          color: deepPurple['500'],
+          color: primary['500'],
         },
       },
     },
@@ -64,7 +63,7 @@ export const FooterStyles = theme => ({
   },
 });
 
-export const SkillListStyles = theme => ({
+export const CategoryListStyles = theme => ({
   root: {
     marginTop: theme.spacing.unit * 2,
     padding: theme.spacing.unit * 1,
@@ -80,7 +79,7 @@ export const SkillListStyles = theme => ({
     transform: 'translateY(-50%)',
     marginRight: theme.spacing.unit * 3,
     '&:hover': {
-      color: deepPurple['500'],
+      color: primary['500'],
     },
   },
 });

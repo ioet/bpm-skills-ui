@@ -1,27 +1,18 @@
 import { connect } from 'react-redux';
 import DeleteDialog from '../presentational/DeleteDialog';
-import { hideDeleteDialog, removeSkillAsync } from '../../actions';
-import { DeleteDialogConst } from '../../constants';
+import { hideDeleteDialog, removeCategoryAsync } from '../../actions';
+import { getCategoryIds, getCategoryName, isDeleteDialogOpen } from '../../selectors';
 
-const mapStateToProps = (state) => {
-  const { skillIds } = state.skillDelete;
-  let skillName = '';
-  if (typeof skillIds !== 'undefined') {
-    skillName = (skillIds.length > 1)
-      ? skillIds.length + DeleteDialogConst.CONTENT_TEXT_MULTI_SKILL
-      : state.skillList[skillIds].name;
-  }
-  return {
-    open: state.skillDelete.open,
-    skillIds,
-    skillName,
-  };
-};
+const mapStateToProps = state => ({
+  open: isDeleteDialogOpen(state),
+  categoryIds: getCategoryIds(state),
+  categoryName: getCategoryName(state),
+});
 
 const mapDispatchToProps = dispatch => ({
-  handleClose: (skills = []) => {
+  handleClose: (categories = []) => {
     dispatch(hideDeleteDialog());
-    skills.forEach(u => dispatch(removeSkillAsync(u)));
+    categories.forEach(u => dispatch(removeCategoryAsync(u)));
   },
 });
 
