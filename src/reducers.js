@@ -92,6 +92,7 @@ export const category = (state = {}, action) => {
       return state;
   }
 };
+
 export const categoryList = (state = {}, action) => {
   const copy = Object.assign({}, state);
   switch (action.type) {

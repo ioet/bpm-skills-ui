@@ -1,4 +1,4 @@
-# bpm-people-ui
+# bpm-categories-ui
 
 In order to set up and run the project, follow these steps:
 
@@ -54,10 +54,10 @@ npm test
 ## Docker?
 
 ```
-$ docker build -t bpm-people-ui .
+$ docker build -t bpm-categories-ui .
 ```
 
 
 ```
-$ docker run -p 8080:8080 bpm-people-ui
+$ docker run -p 8080:8080 bpm-categories-ui
 ```

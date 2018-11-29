@@ -101,7 +101,6 @@ export const getAllCategoriesAsync = () => (
       dispatch(showMessage(ErrorMessage.FAILED_TO_LOAD_CATEGORIES));
     })
 );
-
 export const validateField = input => (typeof input !== 'undefined' && input !== '');
 
 export const validateInputWithErrorMessages = (dispatch, category) => {
@@ -160,7 +159,7 @@ export const updateCategoryAsync = categoryId => (
     } = getState().categoryEdit;
 
     if (typeof name === 'undefined' && typeof business_value === 'undefined'
-        && typeof predictive_value === 'undefined') {
+          && typeof predictive_value === 'undefined') {
       dispatch(removeAllInputErrors());
       return dispatch(endEditCategory());
     }
@@ -226,7 +225,7 @@ export const removeCategoryAsync = categoryId => (
   (dispatch, getState) => categoryApi.deleteCategoryUsingDELETE(categoryId)
     .then(() => {
       dispatch(showMessage(getState().categoryList[categoryId].name
-          + NotificationMessage.CATEGORY_DELETED_SUCCESSFULLY));
+              + NotificationMessage.CATEGORY_DELETED_SUCCESSFULLY));
       dispatch(removeCategory(categoryId));
     })
     .catch((error) => {

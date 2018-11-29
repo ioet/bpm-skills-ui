@@ -1,10 +1,13 @@
 import { createMuiTheme } from '@material-ui/core';
-import { deepOrange, teal } from '@material-ui/core/colors';
+import { pink, blueGrey } from '@material-ui/core/colors';
+
+const primary = blueGrey;
+const secondary = pink;
 
 export const RootTheme = createMuiTheme({
   palette: {
-    primary: teal,
-    secondary: deepOrange,
+    primary,
+    secondary,
   },
   typography: {
     useNextVariants: true,
@@ -20,13 +23,13 @@ export const RootTheme = createMuiTheme({
     },
     MuiCheckbox: {
       checked: {
-        color: `${deepOrange.A400} !important`,
+        color: `${secondary.A400} !important`,
       },
     },
     MUIDataTableToolbar: {
       icon: {
         '&:hover': {
-          color: teal['500'],
+          color: primary['500'],
         },
       },
     },
@@ -76,7 +79,7 @@ export const CategoryListStyles = theme => ({
     transform: 'translateY(-50%)',
     marginRight: theme.spacing.unit * 3,
     '&:hover': {
-      color: teal['500'],
+      color: primary['500'],
     },
   },
 });
