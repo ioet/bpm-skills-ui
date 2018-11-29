@@ -1,0 +1,507 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Manage skills in bpm-skills-project",
+    "version": "0.0.1",
+    "title": "BPM Skills API"
+  },
+  "host": "localhost:9081",
+  "basePath": "/skills-service",
+  "tags": [
+    {
+      "name": "category-controller",
+      "description": "Category Controller"
+    },
+    {
+      "name": "skill-controller",
+      "description": "Skill Controller"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/skills": {
+      "get": {
+        "tags": [
+          "skill-controller"
+        ],
+        "summary": "Return a list of all skills",
+        "operationId": "getAllSkillsUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Skills successfully returned",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Skill"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "skill-controller"
+        ],
+        "summary": "Create a new skill",
+        "operationId": "createSkillUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "skill",
+            "description": "skill",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          },
+          "201": {
+            "description": "Skill successfully created",
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/skills-categories": {
+      "get": {
+        "tags": [
+          "category-controller"
+        ],
+        "summary": "Return a list of all categories",
+        "operationId": "getAllCategoriesUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Categories successfully returned",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Category"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "category-controller"
+        ],
+        "summary": "Create a new category",
+        "operationId": "createCategoryUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "category",
+            "description": "category",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          },
+          "201": {
+            "description": "Category successfully created",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/skills-categories/{id}": {
+      "get": {
+        "tags": [
+          "category-controller"
+        ],
+        "summary": "Return one category",
+        "operationId": "getCategoryUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category successfully returned",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "category-controller"
+        ],
+        "summary": "Update a category",
+        "operationId": "updateCategoryUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "categoryDetails",
+            "description": "categoryDetails",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category successfully updated",
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The category to update was not found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "category-controller"
+        ],
+        "summary": "Delete a category",
+        "operationId": "deleteCategoryUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "204": {
+            "description": "Category successfully deleted",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The category to delete was not found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/skills/{id}": {
+      "get": {
+        "tags": [
+          "skill-controller"
+        ],
+        "summary": "Return one skill",
+        "operationId": "getSkillUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Skill successfully returned",
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "skill-controller"
+        ],
+        "summary": "Update a skill",
+        "operationId": "updateSkillUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "skillDetails",
+            "description": "skillDetails",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Skill successfully updated",
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The skill to update was not found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "skill-controller"
+        ],
+        "summary": "Delete a skill",
+        "operationId": "deleteSkillUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "204": {
+            "description": "Skill successfully deleted",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "The skill to delete was not found"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Category": {
+      "type": "object",
+      "properties": {
+        "business_value": {
+          "type": "number",
+          "format": "double"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "predictive_value": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "Category"
+    },
+    "Iterable": {
+      "type": "object",
+      "title": "Iterable"
+    },
+    "Skill": {
+      "type": "object",
+      "properties": {
+        "business_value": {
+          "type": "number",
+          "format": "double"
+        },
+        "category": {
+          "$ref": "#/definitions/Category"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "predictive_value": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "Skill"
+    }
+  }
+}

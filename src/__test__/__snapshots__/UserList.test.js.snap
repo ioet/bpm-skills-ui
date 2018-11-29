@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CategoryList /> Component Renders correctly 1`] = `
+<CategoryList
+  classes={
+    Object {
+      "iconButton": "CategoryList-iconButton-2",
+      "root": "CategoryList-root-1",
+    }
+  }
+/>
+`;
