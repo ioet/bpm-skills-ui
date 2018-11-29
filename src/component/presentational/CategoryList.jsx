@@ -22,7 +22,6 @@ const CategoryList = (props) => {
   Object.keys(categoryList).forEach((key) => {
     const category = categoryList[key];
     data.push([category.id, category.name, category.business_value, category.predictive_value, false, false]);
-    // data.push([category.id, category.name, '2', '2', false, false]);
   });
   data.sort(compareCategoriesByFirstName);
 
