@@ -40,14 +40,18 @@ export const SkillListItemConst = {
   TOOLTIP_DISCARD: 'Discard',
   TOOLTIP_DELETE: 'Delete',
   EDIT_NAME: 'Edit your name',
+  EDIT_BUSINESS_VALUE: 'Edit the business value',
+  EDIT_PREDICTIVE_VALUE: 'Edit the predctive value',
 };
 
 export const SkillListConst = {
   COLUMN_0: 'Id',
   COLUMN_1: 'Name',
-  COLUMN_2: 'Email',
-  COLUMN_3: 'Edit',
-  COLUMN_4: 'Delete',
+  COLUMN_2: 'Category',
+  COLUMN_3: 'Business Value',
+  COLUMN_4: 'Predictive Value',
+  COLUMN_5: 'Edit',
+  COLUMN_6: 'Delete',
 };
 
 export const DeleteDialogConst = {
