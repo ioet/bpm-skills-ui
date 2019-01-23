@@ -1,6 +1,8 @@
 export const Variable = {
   NAME: 'name',
-  AUTHENTICATION_IDENTITY: 'authentication_identity',
+  PREDICTIVE_VALUE: 'predictive_value',
+  BUSINESS_VALUE: 'business_value',
+  CATEGORY: 'category_id',
 };
 
 export const ErrorMessage = {
@@ -41,7 +43,7 @@ export const SkillListItemConst = {
   TOOLTIP_DELETE: 'Delete',
   EDIT_NAME: 'Edit your name',
   EDIT_BUSINESS_VALUE: 'Edit the business value',
-  EDIT_PREDICTIVE_VALUE: 'Edit the predctive value',
+  EDIT_PREDICTIVE_VALUE: 'Edit the predictive value',
 };
 
 export const SkillListConst = {

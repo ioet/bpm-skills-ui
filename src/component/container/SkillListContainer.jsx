@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import SkillList from '../presentational/SkillList';
-import { showDeleteDialog } from '../../actions';
+import {showDeleteDialog} from '../../actions';
 
 const mapStateToProps = state => ({
   skillList: state.skillList,
@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onRemoveSkills: (skillIds) => {
     dispatch(showDeleteDialog(skillIds));
-  },
+  }
 });
 
 const SkillListContainer = connect(

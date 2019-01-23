@@ -57,9 +57,9 @@ export const removeEmptyRow = () => ({
   type: SkillAction.REMOVE_EMPTY_ROW,
 });
 
-export const startEditSkill = editSkillId => ({
+export const startEditSkill = editSkill => ({
   type: SkillAction.EDIT_START,
-  id: editSkillId,
+  skill: editSkill,
 });
 export const setSkillEditData = (field, name) => ({
   type: SkillAction.EDIT_DATA,
@@ -73,7 +73,7 @@ export const endEditSkill = () => ({
 export const startCreateSkill = () => (
   (dispatch) => {
     dispatch(addEmptyRow());
-    dispatch(startEditSkill(getSkillToBeCreated().skillToBeCreated.id));
+    dispatch(startEditSkill(getSkillToBeCreated().skillToBeCreated));
   }
 );
 
@@ -138,28 +138,13 @@ const createSkillAsync = () => (
 
 const updateSkillAsync = skillId => (
   (dispatch, getState) => {
-    const { id } = getState().skillEdit;
-    const skill = getState().skillList[skillId];
-    let { name } = getState().skillEdit;
+    const skill = getState().skillEdit;
 
-    if (typeof name === 'undefined') {
-      dispatch(removeAllInputErrors());
-      return dispatch(endEditSkill());
-    }
-
-    if (typeof name === 'undefined') {
-      name = skill.name;
-    }
-
-    if (!validateInputWithErrorMessages(dispatch, {
-      name,
-    })) {
+    if (!validateInputWithErrorMessages(dispatch, skill)) {
       return null;
     }
 
-    const skillToUpdate = new Skill();
-    skillToUpdate.name = name;
-    return skillApi.updateSkillUsingPUT(id, skillToUpdate)
+    return skillApi.updateSkillUsingPUT(skillId, skill)
       .then((data) => {
         dispatch(removeAllInputErrors());
         dispatch(endEditSkill());
@@ -189,7 +174,7 @@ export const editUpdateOrCreateSkill = skillId => (
         dispatch(endCreateSkill());
       }
     }
-    return dispatch(startEditSkill(skillId));
+    return dispatch(startEditSkill(getState().skillList[skillId]));
   }
 );
 

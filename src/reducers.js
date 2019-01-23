@@ -35,7 +35,11 @@ const skillEdit = (state = { editing: false }, action) => {
   switch (action.type) {
     case SkillAction.EDIT_START:
       return ({
-        id: action.id,
+        id: action.skill.id,
+        name: action.skill.name,
+        category_id: action.skill.category_id,
+        business_value: action.skill.business_value,
+        predictive_value: action.skill.predictive_value,
         editing: true,
       });
     case SkillAction.EDIT_DATA:

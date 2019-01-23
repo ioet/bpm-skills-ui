@@ -12,6 +12,7 @@ import { compareSkillsByFirstName, getSkillObjectFromArray } from '../utils/Util
 import MyTableCellContainer from '../container/MyTableCellContainer';
 import MyEditButtonContainer from '../container/MyEditButtonContainer';
 import MyDeleteButtonContainer from '../container/MyDeleteButtonContainer';
+import EditCategoryContainer from '../container/EditCategoryContainer';
 
 const SkillList = (props) => {
   const {
@@ -21,7 +22,6 @@ const SkillList = (props) => {
   const data = [];
   Object.keys(skillList).forEach((key) => {
     const skill = skillList[key];
-    // data.push([skill.id, skill.name, skill.business_value, skill.predictive_value, false, false]);
     data.push([skill.id, skill.name, skill.category_id, skill.business_value, skill.predictive_value, false, false]);
   });
   data.sort(compareSkillsByFirstName);
@@ -61,10 +61,10 @@ const SkillList = (props) => {
           const skill = getSkillObjectFromArray(tableMeta.rowData);
           return (
               <MyTableCellContainer skillId={skill.id}>
-                <EditOrPlainTextContainer
+                <EditCategoryContainer
                     skillId={skill.id}
                     value={value}
-                    name={Variable.NAME}
+                    name={Variable.CATEGORY}
                     label={SkillListItemConst.EDIT_NAME}
                 />
               </MyTableCellContainer>
@@ -85,7 +85,7 @@ const SkillList = (props) => {
                 <EditOrPlainTextContainer
                     skillId={skill.id}
                     value={value}
-                    name={Variable.NAME}
+                    name={Variable.BUSINESS_VALUE}
                     label={SkillListItemConst.EDIT_BUSINESS_VALUE}
                 />
               </MyTableCellContainer>
@@ -106,7 +106,7 @@ const SkillList = (props) => {
               <EditOrPlainTextContainer
                   skillId={skill.id}
                   value={value}
-                  name={Variable.NAME}
+                  name={Variable.PREDICTIVE_VALUE}
                   label={SkillListItemConst.EDIT_PREDICTIVE_VALUE}
               />
             </MyTableCellContainer>
@@ -188,7 +188,7 @@ SkillList.propTypes = {
   skillList: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    category: PropTypes.string.isRequired,
+    category: PropTypes.string,
     business_value: PropTypes.number.isRequired,
     predictive_value: PropTypes.number.isRequired,
   })).isRequired,
