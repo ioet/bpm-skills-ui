@@ -1,5 +1,5 @@
 /* eslint-disable camelcase,prefer-destructuring */
-import { SkillControllerApi, Skill } from 'swagger_bpm_skills_api';
+import axios from 'axios';
 import { getSkillToBeCreated } from './component/utils/Utils';
 import {
   DeleteAction, HoverAction, InputErrorAction, MessageAction, SkillAction,
@@ -8,7 +8,9 @@ import {
   ErrorMessage, NotificationMessage, PromptMessage, Variable,
 } from './constants';
 
-const skillApi = new SkillControllerApi();
+const SKILLS_API_PATH = '/skills';
+axios.defaults.baseURL = process.env.BPM_SKILLS_API_URL;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 const addSkills = allSkills => ({
   type: SkillAction.ADD_SKILLS,
@@ -95,11 +97,12 @@ const removeSkill = skillId => ({
 });
 
 export const getAllSkillsAsync = () => (
-  dispatch => skillApi.getAllSkillsUsingGET()
-    .then((data) => {
-      dispatch(addSkills(data));
+  dispatch => axios.get(SKILLS_API_PATH)
+    .then((response) => {
+      dispatch(addSkills(response.data));
     })
     .catch((error) => {
+      console.log(error); // TODO: see if this works
       dispatch(showMessage(`${ErrorMessage.FAILED_TO_LOAD_SKILLS}: ${error}`));
     })
 );
@@ -117,18 +120,17 @@ const validateInputWithErrorMessages = (dispatch, skill) => {
 
 const createSkillAsync = () => (
   (dispatch, getState) => {
-    const { name } = getState().skillEdit;
+    const skill = getState().skillEdit;
 
     if (!validateInputWithErrorMessages(dispatch, getState().skillEdit)) return null;
-
-    const skillToCreate = new Skill();
-    skillToCreate.name = name;
-    return skillApi.createSkillUsingPOST(skillToCreate)
-      .then((data) => {
+    return axios.post(SKILLS_API_PATH, {
+      skill,
+    })
+      .then((response) => {
         dispatch(removeAllInputErrors());
         dispatch(endCreateSkill());
-        dispatch(addSkill(data));
-        dispatch(showMessage(data.name + NotificationMessage.SKILL_CREATED_SUCCESSFULLY));
+        dispatch(addSkill(response.data));
+        dispatch(showMessage(response.data.name + NotificationMessage.SKILL_CREATED_SUCCESSFULLY));
       })
       .catch((error) => {
         dispatch(showMessage(`${ErrorMessage.FAILED_TO_CREATE_SKILL}: ${error}`));
@@ -144,11 +146,13 @@ const updateSkillAsync = skillId => (
       return null;
     }
 
-    return skillApi.updateSkillUsingPUT(skillId, skill)
-      .then((data) => {
+    return axios.post(`${SKILLS_API_PATH}/${skillId}`, {
+      skill,
+    })
+      .then((response) => {
         dispatch(removeAllInputErrors());
         dispatch(endEditSkill());
-        dispatch(setUpdateSkill(data));
+        dispatch(setUpdateSkill(response.data));
         dispatch(showMessage(NotificationMessage.CHANGES_UPDATED_SUCCESSFULLY));
       })
       .catch((error) => {
@@ -179,7 +183,7 @@ export const editUpdateOrCreateSkill = skillId => (
 );
 
 export const removeSkillAsync = skillId => (
-  (dispatch, getState) => skillApi.deleteSkillUsingDELETE(skillId)
+  (dispatch, getState) => axios.delete(`${SKILLS_API_PATH}/${skillId}`)
     .then(() => {
       dispatch(showMessage(getState().skillList[skillId].name + NotificationMessage.SKILL_DELETED_SUCCESSFULLY));
       dispatch(removeSkill(skillId));
