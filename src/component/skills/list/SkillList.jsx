@@ -5,30 +5,37 @@ import MUIDataTable from 'mui-datatables';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import { Delete } from '@material-ui/icons';
-import { SkillListConst, SkillListItemConst, Variable } from '../../constants';
-import { SkillListStyles } from '../../styles';
-import EditOrPlainTextContainer from '../container/EditOrPlainTextContainer';
-import { compareSkillsByFirstName, getSkillObjectFromArray } from '../utils/Utils';
-import MyTableCellContainer from '../container/MyTableCellContainer';
-import MyEditButtonContainer from '../container/MyEditButtonContainer';
-import MyDeleteButtonContainer from '../container/MyDeleteButtonContainer';
-import EditCategoryContainer from '../container/EditCategoryContainer';
+import { SkillListConst } from '../../../constants';
+import { SkillListStyles } from '../../../styles';
+import { compareSkillsByFirstName, getSkillObjectFromArray } from '../../utils/Utils';
+import MyTableCellContainer from '../../container/MyTableCellContainer';
+import BpmDeleteButtonContainer from '../../buttons/BpmDeleteButtonContainer';
+import BpmEditButtonContainer from '../../buttons/BpmEditButtonContainer';
+
+const validate = value => (value === null ? '' : value);
+
+const convertToArray = (skillList) => {
+  const data = [];
+  Object.keys(skillList)
+    .forEach((key) => {
+      const skill = skillList[key];
+      data.push([validate(skill.id), validate(skill.name), validate(skill.label), validate(skill.category_id),
+        validate(skill.business_value), validate(skill.predictive_value), false, false]);
+    });
+  return data;
+};
 
 const SkillList = (props) => {
   const {
     classes, skillList, onRemoveSkills,
   } = props;
 
-  const data = [];
-  Object.keys(skillList).forEach((key) => {
-    const skill = skillList[key];
-    data.push([skill.id, skill.name, skill.category_id, skill.business_value, skill.predictive_value, false, false]);
-  });
+  const data = convertToArray(skillList);
   data.sort(compareSkillsByFirstName);
 
   const columns = [
     {
-      name: SkillListConst.COLUMN_0,
+      name: SkillListConst.COLUMN_ID,
       options: {
         display: 'excluded',
         filter: false,
@@ -37,64 +44,46 @@ const SkillList = (props) => {
       },
     },
     {
-      name: SkillListConst.COLUMN_1,
+      name: SkillListConst.COLUMN_NAME,
       options: {
         customBodyRender: (value, tableMeta) => {
           const skill = getSkillObjectFromArray(tableMeta.rowData);
           return (
             <MyTableCellContainer skillId={skill.id}>
-              <EditOrPlainTextContainer
-                skillId={skill.id}
-                value={value}
-                name={Variable.NAME}
-                label={SkillListItemConst.EDIT_NAME}
-              />
+              {value}
             </MyTableCellContainer>
           );
         },
       },
     },
     {
-      name: SkillListConst.COLUMN_2,
+      name: SkillListConst.COLUMN_LABEL,
       options: {
         customBodyRender: (value, tableMeta) => {
           const skill = getSkillObjectFromArray(tableMeta.rowData);
           return (
-              <MyTableCellContainer skillId={skill.id}>
-                <EditCategoryContainer
-                    skillId={skill.id}
-                    value={value}
-                    name={Variable.CATEGORY}
-                    label={SkillListItemConst.EDIT_NAME}
-                />
-              </MyTableCellContainer>
+            <MyTableCellContainer skillId={skill.id}>
+              {value}
+            </MyTableCellContainer>
           );
         },
       },
     },
     {
-      name: SkillListConst.COLUMN_3,
+      name: SkillListConst.COLUMN_CATEGORY,
       options: {
-        filter: false,
-        sort: false,
-        download: false,
         customBodyRender: (value, tableMeta) => {
           const skill = getSkillObjectFromArray(tableMeta.rowData);
           return (
-              <MyTableCellContainer skillId={skill.id}>
-                <EditOrPlainTextContainer
-                    skillId={skill.id}
-                    value={value}
-                    name={Variable.BUSINESS_VALUE}
-                    label={SkillListItemConst.EDIT_BUSINESS_VALUE}
-                />
-              </MyTableCellContainer>
+            <MyTableCellContainer skillId={skill.id}>
+              {value}
+            </MyTableCellContainer>
           );
         },
       },
     },
     {
-      name: SkillListConst.COLUMN_4,
+      name: SkillListConst.COLUMN_BUSINESS_VALUE,
       options: {
         filter: false,
         sort: false,
@@ -103,19 +92,14 @@ const SkillList = (props) => {
           const skill = getSkillObjectFromArray(tableMeta.rowData);
           return (
             <MyTableCellContainer skillId={skill.id}>
-              <EditOrPlainTextContainer
-                  skillId={skill.id}
-                  value={value}
-                  name={Variable.PREDICTIVE_VALUE}
-                  label={SkillListItemConst.EDIT_PREDICTIVE_VALUE}
-              />
+              {value}
             </MyTableCellContainer>
           );
         },
       },
     },
     {
-      name: SkillListConst.COLUMN_5,
+      name: SkillListConst.COLUMN_PREDICTIVE_VALUE,
       options: {
         filter: false,
         sort: false,
@@ -124,16 +108,14 @@ const SkillList = (props) => {
           const skill = getSkillObjectFromArray(tableMeta.rowData);
           return (
             <MyTableCellContainer skillId={skill.id}>
-              <MyEditButtonContainer
-                skillId={skill.id}
-              />
+              {value}
             </MyTableCellContainer>
           );
         },
       },
     },
     {
-      name: SkillListConst.COLUMN_6,
+      name: SkillListConst.COLUMN_EDIT,
       options: {
         filter: false,
         sort: false,
@@ -141,11 +123,29 @@ const SkillList = (props) => {
         customBodyRender: (value, tableMeta) => {
           const skill = getSkillObjectFromArray(tableMeta.rowData);
           return (
-              <MyTableCellContainer skillId={skill.id}>
-                <MyDeleteButtonContainer
-                    skillId={skill.id}
-                />
-              </MyTableCellContainer>
+            <MyTableCellContainer skillId={skill.id}>
+              <BpmEditButtonContainer
+                itemId={skill.id}
+              />
+            </MyTableCellContainer>
+          );
+        },
+      },
+    },
+    {
+      name: SkillListConst.COLUMN_DELETE,
+      options: {
+        filter: false,
+        sort: false,
+        download: false,
+        customBodyRender: (value, tableMeta) => {
+          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          return (
+            <MyTableCellContainer skillId={skill.id}>
+              <BpmDeleteButtonContainer
+                itemId={skill.id}
+              />
+            </MyTableCellContainer>
           );
         },
       },
@@ -154,7 +154,7 @@ const SkillList = (props) => {
   const options = {
     filterType: 'dropdown',
     responsive: 'scroll',
-    resizableColumns: true,
+    resizableColumns: false,
     selectableRows: true,
     print: false,
     rowsPerPageOptions: [10, 15, 25],
@@ -188,6 +188,7 @@ SkillList.propTypes = {
   skillList: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
     category: PropTypes.string,
     business_value: PropTypes.number.isRequired,
     predictive_value: PropTypes.number.isRequired,

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import SkillList from '../presentational/SkillList';
-import {showDeleteDialog} from '../../actions';
+import SkillList from './SkillList';
+import {showDeleteDialog} from '../../../actions';
 
 const mapStateToProps = state => ({
   skillList: state.skillList,

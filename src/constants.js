@@ -9,7 +9,7 @@ export const ErrorMessage = {
   FAILED_TO_LOAD_SKILLS: 'Failed to load all saved skills.',
   FAILED_TO_CREATE_SKILL: 'Failed to create a new skill.',
   FAILED_TO_UPDATE_SKILL: 'Failed to update the skill.',
-  FAILED_TO_REMOVE_SKILL: 'Failed to delete the skill.',
+  FAILED_TO_REMOVE_SKILL: 'Failed to deleteSkill the skill.',
 };
 
 export const NotificationMessage = {
@@ -47,23 +47,17 @@ export const SkillListItemConst = {
 };
 
 export const SkillListConst = {
-  COLUMN_0: 'Id',
-  COLUMN_1: 'Name',
-  COLUMN_2: 'Category',
-  COLUMN_3: 'Business Value',
-  COLUMN_4: 'Predictive Value',
-  COLUMN_5: 'Edit',
-  COLUMN_6: 'Delete',
+  COLUMN_ID: 'Id',
+  COLUMN_NAME: 'Name',
+  COLUMN_LABEL: 'Label',
+  COLUMN_CATEGORY: 'Category',
+  COLUMN_BUSINESS_VALUE: 'Business Value',
+  COLUMN_PREDICTIVE_VALUE: 'Predictive Value',
+  COLUMN_EDIT: 'Edit',
+  COLUMN_DELETE: 'Delete',
 };
 
-export const DeleteDialogConst = {
-  TITLE: 'Delete skill',
-  CONTENT_TEXT_1: 'Do you really want to delete ',
-  CONTENT_TEXT_2: ' permanently?',
-  CONTENT_TEXT_MULTI_SKILL: ' skillRs',
-  DISAGREE: 'No',
-  AGREE: 'Yes',
-};
+
 
 export const FloatingActionButtonConst = {
   TOOLTIP_ADD: 'Add new skills',

@@ -6,9 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
-    "test": "jest --coverage",
-    "generate-swagger-client": "./swagger-codegen/generate-client.sh",
-    "setup": "npm install && npm run generate-swagger-client"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +14,7 @@
   "dependencies": {
     "@material-ui/core": "^3.3.1",
     "@material-ui/icons": "^3.0.1",
-    "mui-datatables": "^2.0.0-beta-32",
+    "mui-datatables": "^2.0.0-beta-53",
     "prop-types": "15.6.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",

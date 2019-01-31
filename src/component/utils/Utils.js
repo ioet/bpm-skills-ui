@@ -28,5 +28,7 @@ export function getSkillObjectFromArray(skill) {
   return {
     id: skill[0],
     name: skill[1],
+    label: skill[2],
+
   };
 }

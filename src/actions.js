@@ -22,14 +22,6 @@ export const addSkill = oneSkill => ({
   name: oneSkill.name,
 });
 
-const setInputError = field => ({
-  type: InputErrorAction.ADD,
-  field,
-});
-const removeAllInputErrors = () => ({
-  type: InputErrorAction.REMOVE_ALL,
-});
-
 export const showMessage = errorMessage => ({
   type: MessageAction.MESSAGE,
   open: true,
@@ -41,15 +33,7 @@ export const hideMessage = () => ({
   message: '',
 });
 
-export const showDeleteDialog = skillIds => ({
-  type: DeleteAction.SHOW_DIALOG,
-  open: true,
-  skillIds,
-});
-export const hideDeleteDialog = () => ({
-  type: DeleteAction.HIDE_DIALOG,
-  open: false,
-});
+
 
 export const addEmptyRow = () => ({
   type: SkillAction.ADD_EMPTY_ROW,
@@ -89,11 +73,6 @@ export const endCreateSkill = () => (
 export const setUpdateSkill = skillToUpdate => ({
   type: SkillAction.UPDATE,
   skill: skillToUpdate,
-});
-
-const removeSkill = skillId => ({
-  type: SkillAction.REMOVE,
-  skillId,
 });
 
 export const getAllSkillsAsync = () => (
@@ -146,7 +125,7 @@ const updateSkillAsync = skillId => (
       return null;
     }
 
-    return axios.post(`${SKILLS_API_PATH}/${skillId}`, {
+    return axios.put(`${SKILLS_API_PATH}/${skillId}`, {
       skill,
     })
       .then((response) => {
@@ -182,16 +161,7 @@ export const editUpdateOrCreateSkill = skillId => (
   }
 );
 
-export const removeSkillAsync = skillId => (
-  (dispatch, getState) => axios.delete(`${SKILLS_API_PATH}/${skillId}`)
-    .then(() => {
-      dispatch(showMessage(getState().skillList[skillId].name + NotificationMessage.SKILL_DELETED_SUCCESSFULLY));
-      dispatch(removeSkill(skillId));
-    })
-    .catch((error) => {
-      dispatch(showMessage(`${ErrorMessage.FAILED_TO_REMOVE_SKILL}: ${error}`));
-    })
-);
+
 
 export const clearSkill = creating => (
   (dispatch) => {

@@ -2,12 +2,15 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography/Typography';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
-import SkillListContainer from './component/container/SkillListContainer';
+import SkillListContainer from './component/skills/list/SkillListContainer';
 import ErrorSnackbarContainer from './component/container/ErrorSnackbarContainer';
 import Footer from './component/presentational/Footer';
 import { AppConst } from './constants';
-import FloatingActionButtonContainer from './component/container/FloatingActionButtonContainer';
-import DeleteDialogContainer from './component/container/DeleteDialogContainer';
+import DeleteDialogContainer from './component/delete-dialog/DeleteDialogContainer';
+import { removeSkills } from './component/delete-dialog/DeleteDialogActions';
+import NewSkillButtonContainer from './component/skills/create/NewSkillButtonContainer';
+import { startCreateSkill } from './component/skills/edit/EditSkillActions';
+import SkillFormDialogContainer from './component/skills/dialog-form/SkillFormDialogContainer';
 
 function App() {
   return (
@@ -19,11 +22,12 @@ function App() {
           </Typography>
         </Toolbar>
       </AppBar>
+      <NewSkillButtonContainer onClickCallback={startCreateSkill} />
       <SkillListContainer />
       <Footer />
-      <FloatingActionButtonContainer />
       <ErrorSnackbarContainer />
-      <DeleteDialogContainer />
+      <DeleteDialogContainer onConfirm={removeSkills} />
+      <SkillFormDialogContainer />
     </div>
   );
 }

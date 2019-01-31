@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import DeleteDialog from '../presentational/DeleteDialog';
-import { hideDeleteDialog, removeSkillAsync } from '../../actions';
-import { DeleteDialogConst } from '../../constants';
+import DeleteDialog from './DeleteDialog';
+import DeleteDialogConst from './DeleteDialogConstants';
+import { hideDeleteDialog } from './DeleteDialogActions';
 
 const mapStateToProps = (state) => {
   const { skillIds } = state.skillDelete;
@@ -18,10 +18,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   handleClose: (skills = []) => {
     dispatch(hideDeleteDialog());
-    skills.forEach(u => dispatch(removeSkillAsync(u)));
+    dispatch(ownProps.onConfirm(skills));
   },
 });
 
