@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const SKILLS = '/skills';
-export const CATEGORIES = '/skills';
+export const CATEGORIES = '/skills-categories';
 
 class SkillsApi {
   constructor() {
@@ -10,12 +10,24 @@ class SkillsApi {
     this.skillsApi.defaults.headers.common['Content-Type'] = 'application/json';
   }
 
+  getAllSkills() {
+    return this.skillsApi.get(SKILLS);
+  }
+
   createSkill(skill) {
     return this.skillsApi.post(SKILLS, skill);
   }
 
+  updateSkill(skill) {
+    return this.skillsApi.put(`${SKILLS}/${skill.id}`, skill);
+  }
+
   deleteSkill(skillId) {
     return this.skillsApi.delete(`${SKILLS}/${skillId}`);
+  }
+
+  getAllCategories() {
+    return this.skillsApi.get(CATEGORIES);
   }
 }
 

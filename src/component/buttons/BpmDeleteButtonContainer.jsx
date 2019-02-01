@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Delete } from '@material-ui/icons';
 import BpmIconButton from './BpmIconButton';
-import { getHoverId, isHoverActive } from '../hover/hover-selector';
+import { getHoverId, isHoverActive } from '../hover/HoverSelector';
 import { showDeleteDialog } from '../delete-dialog/DeleteDialogActions';
 
 const mapStateToProps = state => ({

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { setSkillEditData } from '../skills/edit/EditSkillActions';
 import BpmTextField from './BpmTextField';
 import { getInputError } from './BpmTextFieldSelector';
 
@@ -12,9 +11,9 @@ const mapStateToProps = (state, ownProps) => ({
   type: ownProps.type,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   onChange: (event) => {
-    dispatch(setSkillEditData(event.target.name, event.target.value));
+    dispatch(ownProps.onInputChange(event.target.name, event.target.value));
   },
 });
 

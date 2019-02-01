@@ -1,33 +1,38 @@
+import React from 'react';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import { connect } from 'react-redux';
-import DeleteDialog from './DeleteDialog';
 import DeleteDialogConst from './DeleteDialogConstants';
-import { hideDeleteDialog } from './DeleteDialogActions';
+import { handleCloseDeleteDialog, hideDeleteDialog } from './DeleteDialogActions';
+import { getSkillNameToDelete } from './DeleteDialogSelector';
+import BpmDialog from '../bpm-dialog/BpmDialog';
 
-const mapStateToProps = (state) => {
-  const { skillIds } = state.skillDelete;
-  let skillName = '';
-  if (typeof skillIds !== 'undefined') {
-    skillName = (skillIds.length > 1)
-      ? skillIds.length + DeleteDialogConst.CONTENT_TEXT_MULTI_SKILL
-      : state.skillList[skillIds].name;
-  }
-  return {
-    open: state.skillDelete.open,
-    skillIds,
-    skillName,
-  };
-};
+const getChildren = skillName => (
+  <DialogContentText id="alert-dialog-slide-description">
+    {DeleteDialogConst.CONTENT_TEXT_1}
+    <b>
+      {skillName}
+    </b>
+    {DeleteDialogConst.CONTENT_TEXT_2}
+  </DialogContentText>
+);
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  handleClose: (skills = []) => {
+const mapStateToProps = state => ({
+  open: state.skillDelete.open,
+  children: getChildren(getSkillNameToDelete(state)),
+  dialogTitle: DeleteDialogConst.TITLE,
+  positiveButtonLabel: DeleteDialogConst.AGREE,
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleClose: (confirmed) => {
+    dispatch(handleCloseDeleteDialog(confirmed));
     dispatch(hideDeleteDialog());
-    dispatch(ownProps.onConfirm(skills));
   },
 });
 
 const DeleteDialogContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DeleteDialog);
+)(BpmDialog);
 
 export default DeleteDialogContainer;

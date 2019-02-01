@@ -2,10 +2,10 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar/Snackbar';
 import PropTypes from 'prop-types';
-import { ErrorSnackbarConst } from '../../constants';
 import { SnackbarStyles } from '../../styles';
+import NotificationConst from './NotificationConsts';
 
-const ErrorSnackbar = (props) => {
+const Notification = (props) => {
   const {
     classes, open, handleClose, message,
   } = props;
@@ -18,7 +18,7 @@ const ErrorSnackbar = (props) => {
         horizontal: 'center',
       }}
       open={open}
-      autoHideDuration={ErrorSnackbarConst.AUTO_HIDE_DURATION}
+      autoHideDuration={NotificationConst.AUTO_HIDE_DURATION}
       onClose={handleClose}
       ContentProps={{
         'aria-describedby': 'message-id',
@@ -32,15 +32,15 @@ const ErrorSnackbar = (props) => {
   );
 };
 
-ErrorSnackbar.defaultProps = {
+Notification.defaultProps = {
   message: '',
 };
 
-ErrorSnackbar.propTypes = {
+Notification.propTypes = {
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   message: PropTypes.string,
 };
 
-export default withStyles(SnackbarStyles)(ErrorSnackbar);
+export default withStyles(SnackbarStyles)(Notification);

@@ -1,7 +1,8 @@
 import { ErrorMessage, NotificationMessage } from '../../constants';
-import { showMessage } from '../../actions';
-import { SkillAction } from '../../action-types';
 import SkillsApi from '../skillsApi/SkillsApi';
+import { showMessage } from '../notification/NotificationActions';
+import { SkillAction } from '../skills/SkillActions';
+import { getSkillIdsToDelete } from './DeleteDialogSelector';
 
 export const DeleteAction = {
   SHOW_DIALOG: 'SHOW_DIALOG',
@@ -24,7 +25,8 @@ const removeSkill = skillId => ({
   skillId,
 });
 
-export const removeSkills = skillIds => ((dispatch, getState) => {
+export const removeSkills = () => ((dispatch, getState) => {
+  const skillIds = getSkillIdsToDelete(getState());
   skillIds.forEach((id) => {
     new SkillsApi().deleteSkill(id)
       .then(() => {
@@ -35,4 +37,10 @@ export const removeSkills = skillIds => ((dispatch, getState) => {
         dispatch(showMessage(`${ErrorMessage.FAILED_TO_REMOVE_SKILL}: ${error}`));
       });
   });
+});
+
+export const handleCloseDeleteDialog = confirmed => ((dispatch) => {
+  if (confirmed) {
+    dispatch(removeSkills());
+  }
 });

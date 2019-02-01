@@ -1,6 +1,6 @@
 import { EditSkillAction } from './EditSkillActions';
 
-export const skillEdit = (state = { editing: false, skill: {} }, action) => {
+const skillEdit = (state = { editing: false, skill: {} }, action) => {
   switch (action.type) {
     case EditSkillAction.EDIT_START:
       return {
@@ -12,6 +12,7 @@ export const skillEdit = (state = { editing: false, skill: {} }, action) => {
       return {
         ...state,
         skill: {
+          ...state.skill,
           [action.field]: action.value,
         },
       };
@@ -24,3 +25,5 @@ export const skillEdit = (state = { editing: false, skill: {} }, action) => {
       return state;
   }
 };
+
+export default skillEdit;

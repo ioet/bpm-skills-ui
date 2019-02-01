@@ -3,11 +3,10 @@ import Typography from '@material-ui/core/Typography/Typography';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import SkillListContainer from './component/skills/list/SkillListContainer';
-import ErrorSnackbarContainer from './component/container/ErrorSnackbarContainer';
-import Footer from './component/presentational/Footer';
+import NotificationContainer from './component/notification/NotificationContainer';
+import Footer from './component/bpm-footer/Footer';
 import { AppConst } from './constants';
 import DeleteDialogContainer from './component/delete-dialog/DeleteDialogContainer';
-import { removeSkills } from './component/delete-dialog/DeleteDialogActions';
 import NewSkillButtonContainer from './component/skills/create/NewSkillButtonContainer';
 import { startCreateSkill } from './component/skills/edit/EditSkillActions';
 import SkillFormDialogContainer from './component/skills/dialog-form/SkillFormDialogContainer';
@@ -25,8 +24,8 @@ function App() {
       <NewSkillButtonContainer onClickCallback={startCreateSkill} />
       <SkillListContainer />
       <Footer />
-      <ErrorSnackbarContainer />
-      <DeleteDialogContainer onConfirm={removeSkills} />
+      <NotificationContainer />
+      <DeleteDialogContainer />
       <SkillFormDialogContainer />
     </div>
   );

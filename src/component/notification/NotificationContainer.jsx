@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import ErrorSnackbar from '../presentational/ErrorSnackbar';
-import { hideMessage } from '../../actions';
+import ErrorSnackbar from './Notification';
+import { hideMessage } from './NotificationActions';
 
 const mapStateToProps = state => ({
   open: state.message.open,
@@ -13,9 +13,9 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const ErrorSnackbarContainer = connect(
+const NotificationContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ErrorSnackbar);
 
-export default ErrorSnackbarContainer;
+export default NotificationContainer;

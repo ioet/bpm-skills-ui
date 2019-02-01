@@ -10,6 +10,8 @@ export const ErrorMessage = {
   FAILED_TO_CREATE_SKILL: 'Failed to create a new skill.',
   FAILED_TO_UPDATE_SKILL: 'Failed to update the skill.',
   FAILED_TO_REMOVE_SKILL: 'Failed to deleteSkill the skill.',
+
+  FAILED_TO_LOAD_CATEGORIES: 'Failed to load all saved categories.',
 };
 
 export const NotificationMessage = {
@@ -25,10 +27,6 @@ export const PromptMessage = {
 
 export const AppConst = {
   APP_TITLE: 'Here are all skills currently saved in our system',
-};
-
-export const ErrorSnackbarConst = {
-  AUTO_HIDE_DURATION: 3000,
 };
 
 export const FooterConst = {
@@ -55,13 +53,6 @@ export const SkillListConst = {
   COLUMN_PREDICTIVE_VALUE: 'Predictive Value',
   COLUMN_EDIT: 'Edit',
   COLUMN_DELETE: 'Delete',
-};
-
-
-
-export const FloatingActionButtonConst = {
-  TOOLTIP_ADD: 'Add new skills',
-  TOOLTIP_DISCARD: 'Discard',
 };
 
 export const TooltipConst = {

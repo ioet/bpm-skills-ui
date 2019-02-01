@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Edit } from '@material-ui/icons';
-import { getHoverId, isHoverActive } from '../hover/hover-selector';
-import { editUpdateOrCreateSkill } from '../../actions';
+import { getHoverId, isHoverActive } from '../hover/HoverSelector';
 import BpmIconButton from './BpmIconButton';
+import { editSkill } from '../skills/edit/EditSkillActions';
 
 const mapStateToProps = state => ({
   hover: isHoverActive(state),
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClickCallback: () => {
-    dispatch(editUpdateOrCreateSkill(ownProps.itemId));
+    dispatch(editSkill(ownProps.itemId));
   },
 });
 

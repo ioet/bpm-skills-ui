@@ -7,31 +7,15 @@ import IconButton from '@material-ui/core/IconButton';
 import { Delete } from '@material-ui/icons';
 import { SkillListConst } from '../../../constants';
 import { SkillListStyles } from '../../../styles';
-import { compareSkillsByFirstName, getSkillObjectFromArray } from '../../utils/Utils';
-import MyTableCellContainer from '../../container/MyTableCellContainer';
+import { getSkillObjectFromArray } from '../../utils/Utils';
+import MyTableCellContainer from '../../bpm-table-cell/MyTableCellContainer';
 import BpmDeleteButtonContainer from '../../buttons/BpmDeleteButtonContainer';
 import BpmEditButtonContainer from '../../buttons/BpmEditButtonContainer';
-
-const validate = value => (value === null ? '' : value);
-
-const convertToArray = (skillList) => {
-  const data = [];
-  Object.keys(skillList)
-    .forEach((key) => {
-      const skill = skillList[key];
-      data.push([validate(skill.id), validate(skill.name), validate(skill.label), validate(skill.category_id),
-        validate(skill.business_value), validate(skill.predictive_value), false, false]);
-    });
-  return data;
-};
 
 const SkillList = (props) => {
   const {
     classes, skillList, onRemoveSkills,
   } = props;
-
-  const data = convertToArray(skillList);
-  data.sort(compareSkillsByFirstName);
 
   const columns = [
     {
@@ -162,7 +146,7 @@ const SkillList = (props) => {
       <IconButton
         onClick={(e) => {
           e.preventDefault();
-          const selectedSkillIds = selected.data.map(u => data[u.dataIndex][0]);
+          const selectedSkillIds = selected.data.map(u => skillList[u.dataIndex][0]);
           onRemoveSkills(selectedSkillIds);
         }}
         className={classes.iconButton}
@@ -175,7 +159,7 @@ const SkillList = (props) => {
   return (
     <div className={classes.root}>
       <MUIDataTable
-        data={data}
+        data={skillList}
         columns={columns}
         options={options}
       />

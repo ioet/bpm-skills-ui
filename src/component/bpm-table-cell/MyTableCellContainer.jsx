@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { hoverOut, hoverOver } from '../../actions';
-import MyTableCell from '../presentational/MyTableCell';
+import MyTableCell from './MyTableCell';
+import { hoverOut, hoverOver } from '../hover/HoverActions';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMouseOver: () => {

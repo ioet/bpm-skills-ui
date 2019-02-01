@@ -1,6 +1,6 @@
 import { InputErrorAction } from './BpmTextFieldActions';
 
-export const inputError = (state = {}, action) => {
+const inputError = (state = {}, action) => {
   switch (action.type) {
     case InputErrorAction.ADD:
       return ({
@@ -13,3 +13,5 @@ export const inputError = (state = {}, action) => {
       return state;
   }
 };
+
+export default inputError;

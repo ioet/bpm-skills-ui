@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions/DialogActions';
 import Button from '@material-ui/core/Button/Button';
 import Slide from '@material-ui/core/Slide/Slide';
 import PropTypes from 'prop-types';
-import { SkillFormDialogConstants } from './SkillFormDialogConstants';
+import { SkillFormDialogConstants } from '../skills/dialog-form/SkillFormDialogConstants';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;

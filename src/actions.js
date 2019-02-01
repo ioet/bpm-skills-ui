@@ -1,60 +1,11 @@
 /* eslint-disable camelcase,prefer-destructuring */
-import axios from 'axios';
 import { getSkillToBeCreated } from './component/utils/Utils';
-import {
-  DeleteAction, HoverAction, InputErrorAction, MessageAction, SkillAction,
-} from './action-types';
 import {
   ErrorMessage, NotificationMessage, PromptMessage, Variable,
 } from './constants';
-
-const SKILLS_API_PATH = '/skills';
-axios.defaults.baseURL = process.env.BPM_SKILLS_API_URL;
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-
-const addSkills = allSkills => ({
-  type: SkillAction.ADD_SKILLS,
-  skill: allSkills,
-});
-export const addSkill = oneSkill => ({
-  type: SkillAction.ADD_SKILL,
-  id: oneSkill.id,
-  name: oneSkill.name,
-});
-
-export const showMessage = errorMessage => ({
-  type: MessageAction.MESSAGE,
-  open: true,
-  message: errorMessage,
-});
-export const hideMessage = () => ({
-  type: MessageAction.MESSAGE,
-  open: false,
-  message: '',
-});
-
-
-
-export const addEmptyRow = () => ({
-  type: SkillAction.ADD_EMPTY_ROW,
-});
-
-export const removeEmptyRow = () => ({
-  type: SkillAction.REMOVE_EMPTY_ROW,
-});
-
-export const startEditSkill = editSkill => ({
-  type: SkillAction.EDIT_START,
-  skill: editSkill,
-});
-export const setSkillEditData = (field, name) => ({
-  type: SkillAction.EDIT_DATA,
-  field,
-  name,
-});
-export const endEditSkill = () => ({
-  type: SkillAction.EDIT_END,
-});
+import { removeAllInputErrors, setInputError } from './component/text-field/BpmTextFieldActions';
+import { showDeleteDialog } from './component/delete-dialog/DeleteDialogActions';
+import { showMessage } from './component/notification/NotificationActions';
 
 export const startCreateSkill = () => (
   (dispatch) => {
@@ -74,17 +25,6 @@ export const setUpdateSkill = skillToUpdate => ({
   type: SkillAction.UPDATE,
   skill: skillToUpdate,
 });
-
-export const getAllSkillsAsync = () => (
-  dispatch => axios.get(SKILLS_API_PATH)
-    .then((response) => {
-      dispatch(addSkills(response.data));
-    })
-    .catch((error) => {
-      console.log(error); // TODO: see if this works
-      dispatch(showMessage(`${ErrorMessage.FAILED_TO_LOAD_SKILLS}: ${error}`));
-    })
-);
 
 const validateField = input => !(typeof input === 'undefined' || input === '');
 
@@ -161,8 +101,6 @@ export const editUpdateOrCreateSkill = skillId => (
   }
 );
 
-
-
 export const clearSkill = creating => (
   (dispatch) => {
     if (creating) {
@@ -195,12 +133,3 @@ export const clearOrShowDelete = skillIds => (
     }
   }
 );
-
-export const hoverOver = id => ({
-  type: HoverAction.OVER,
-  id,
-});
-
-export const hoverOut = () => ({
-  type: HoverAction.OUT,
-});
