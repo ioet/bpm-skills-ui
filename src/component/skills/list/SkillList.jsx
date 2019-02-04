@@ -5,12 +5,11 @@ import MUIDataTable from 'mui-datatables';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import { Delete } from '@material-ui/icons';
-import { SkillListConst } from '../../../constants';
-import { SkillListStyles } from '../../../styles';
-import { getSkillObjectFromArray } from '../../utils/Utils';
-import MyTableCellContainer from '../../bpm-table-cell/MyTableCellContainer';
-import BpmDeleteButtonContainer from '../../buttons/BpmDeleteButtonContainer';
-import BpmEditButtonContainer from '../../buttons/BpmEditButtonContainer';
+import BpmTableCellContainer from '../../bpm-table-cell/BpmTableCellContainer';
+import BpmDeleteButtonContainer from './BpmDeleteButtonContainer';
+import BpmEditButtonContainer from './BpmEditButtonContainer';
+import { SkillListConst } from './SkillListConstants';
+import { SkillListStyles } from './SkillListStyles';
 
 const SkillList = (props) => {
   const {
@@ -31,11 +30,11 @@ const SkillList = (props) => {
       name: SkillListConst.COLUMN_NAME,
       options: {
         customBodyRender: (value, tableMeta) => {
-          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          const skillId = tableMeta.rowData[0];
           return (
-            <MyTableCellContainer skillId={skill.id}>
+            <BpmTableCellContainer skillId={skillId}>
               {value}
-            </MyTableCellContainer>
+            </BpmTableCellContainer>
           );
         },
       },
@@ -44,11 +43,11 @@ const SkillList = (props) => {
       name: SkillListConst.COLUMN_LABEL,
       options: {
         customBodyRender: (value, tableMeta) => {
-          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          const skillId = tableMeta.rowData[0];
           return (
-            <MyTableCellContainer skillId={skill.id}>
+            <BpmTableCellContainer skillId={skillId}>
               {value}
-            </MyTableCellContainer>
+            </BpmTableCellContainer>
           );
         },
       },
@@ -57,11 +56,11 @@ const SkillList = (props) => {
       name: SkillListConst.COLUMN_CATEGORY,
       options: {
         customBodyRender: (value, tableMeta) => {
-          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          const skillId = tableMeta.rowData[0];
           return (
-            <MyTableCellContainer skillId={skill.id}>
+            <BpmTableCellContainer skillId={skillId}>
               {value}
-            </MyTableCellContainer>
+            </BpmTableCellContainer>
           );
         },
       },
@@ -73,11 +72,11 @@ const SkillList = (props) => {
         sort: false,
         download: false,
         customBodyRender: (value, tableMeta) => {
-          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          const skillId = tableMeta.rowData[0];
           return (
-            <MyTableCellContainer skillId={skill.id}>
+            <BpmTableCellContainer skillId={skillId}>
               {value}
-            </MyTableCellContainer>
+            </BpmTableCellContainer>
           );
         },
       },
@@ -89,11 +88,11 @@ const SkillList = (props) => {
         sort: false,
         download: false,
         customBodyRender: (value, tableMeta) => {
-          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          const skillId = tableMeta.rowData[0];
           return (
-            <MyTableCellContainer skillId={skill.id}>
+            <BpmTableCellContainer skillId={skillId}>
               {value}
-            </MyTableCellContainer>
+            </BpmTableCellContainer>
           );
         },
       },
@@ -105,13 +104,13 @@ const SkillList = (props) => {
         sort: false,
         download: false,
         customBodyRender: (value, tableMeta) => {
-          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          const skillId = tableMeta.rowData[0];
           return (
-            <MyTableCellContainer skillId={skill.id}>
+            <BpmTableCellContainer skillId={skillId}>
               <BpmEditButtonContainer
-                itemId={skill.id}
+                itemId={skillId}
               />
-            </MyTableCellContainer>
+            </BpmTableCellContainer>
           );
         },
       },
@@ -123,13 +122,13 @@ const SkillList = (props) => {
         sort: false,
         download: false,
         customBodyRender: (value, tableMeta) => {
-          const skill = getSkillObjectFromArray(tableMeta.rowData);
+          const skillId = tableMeta.rowData[0];
           return (
-            <MyTableCellContainer skillId={skill.id}>
+            <BpmTableCellContainer skillId={skillId}>
               <BpmDeleteButtonContainer
-                itemId={skill.id}
+                itemId={skillId}
               />
-            </MyTableCellContainer>
+            </BpmTableCellContainer>
           );
         },
       },
@@ -169,14 +168,7 @@ const SkillList = (props) => {
 
 SkillList.propTypes = {
   classes: PropTypes.object.isRequired,
-  skillList: PropTypes.objectOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    category: PropTypes.string,
-    business_value: PropTypes.number.isRequired,
-    predictive_value: PropTypes.number.isRequired,
-  })).isRequired,
+  skillList: PropTypes.arrayOf(PropTypes.array).isRequired,
   onRemoveSkills: PropTypes.func.isRequired,
 };
 

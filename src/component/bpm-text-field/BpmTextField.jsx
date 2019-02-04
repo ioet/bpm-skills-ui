@@ -33,13 +33,17 @@ BpmTextField.defaultProps = {
   error: false,
   helperText: '',
   type: undefined,
+  value: '',
 };
 
 BpmTextField.propTypes = {
   autoFocus: PropTypes.bool,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   error: PropTypes.bool,
   helperText: PropTypes.string,
   type: PropTypes.string,

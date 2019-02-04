@@ -3,9 +3,9 @@ import Typography from '@material-ui/core/Typography/Typography';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import SkillListContainer from './component/skills/list/SkillListContainer';
-import NotificationContainer from './component/notification/NotificationContainer';
+import NotificationContainer from './component/bpm-notification/NotificationContainer';
 import Footer from './component/bpm-footer/Footer';
-import { AppConst } from './constants';
+import { AppConstants } from './AppConstants';
 import DeleteDialogContainer from './component/delete-dialog/DeleteDialogContainer';
 import NewSkillButtonContainer from './component/skills/create/NewSkillButtonContainer';
 import { startCreateSkill } from './component/skills/edit/EditSkillActions';
@@ -17,7 +17,7 @@ function App() {
       <AppBar position="sticky">
         <Toolbar>
           <Typography variant="h6" color="inherit">
-            {AppConst.APP_TITLE}
+            {AppConstants.APP_TITLE}
           </Typography>
         </Toolbar>
       </AppBar>

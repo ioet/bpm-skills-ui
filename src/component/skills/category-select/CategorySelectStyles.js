@@ -1,6 +1,8 @@
 const CategorySelectStyles = {
   categorySelect: {
-    minWidth: 200,
+    width: '100%',
+    marginTop: '8px',
+    marginBottom: '4px',
   },
 };
 

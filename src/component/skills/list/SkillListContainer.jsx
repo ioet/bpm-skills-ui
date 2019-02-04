@@ -1,8 +1,17 @@
 import { connect } from 'react-redux';
 import SkillList from './SkillList';
 import { showDeleteDialog } from '../../delete-dialog/DeleteDialogActions';
-import { compareSkillsByFirstName } from '../../utils/Utils';
 import { getCategoryNameById } from '../../categories/CategorySelector';
+
+function compareSkillsByFirstName(a, b) {
+  if (a[1].toLowerCase() < b[1].toLowerCase()) {
+    return -1;
+  }
+  if (a[1].toLowerCase() > b[1].toLowerCase()) {
+    return 1;
+  }
+  return 0;
+}
 
 const validate = value => (value === null ? '' : value);
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar/Snackbar';
 import PropTypes from 'prop-types';
-import { SnackbarStyles } from '../../styles';
-import NotificationConst from './NotificationConsts';
+import { NotificationConst } from './NotificationConstants';
+import { NotificationStyles } from './NotificationStyles';
 
 const Notification = (props) => {
   const {
@@ -43,4 +43,4 @@ Notification.propTypes = {
   message: PropTypes.string,
 };
 
-export default withStyles(SnackbarStyles)(Notification);
+export default withStyles(NotificationStyles)(Notification);

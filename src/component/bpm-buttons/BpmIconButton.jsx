@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Tooltip from '@material-ui/core/Tooltip/Tooltip';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { TooltipConst } from '../../constants';
 import BpmIconButtonStyles from './ButtonStyles';
+import { TooltipConst } from './BpmIconButtonConstants';
 
 const BpmIconButton = (props) => {
   const {

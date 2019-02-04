@@ -2,10 +2,10 @@
 import { getSkillToBeCreated } from './component/utils/Utils';
 import {
   ErrorMessage, NotificationMessage, PromptMessage, Variable,
-} from './constants';
-import { removeAllInputErrors, setInputError } from './component/text-field/BpmTextFieldActions';
+} from './AppConstants';
+import { removeAllInputErrors, setInputError } from './component/bpm-text-field/BpmTextFieldActions';
 import { showDeleteDialog } from './component/delete-dialog/DeleteDialogActions';
-import { showMessage } from './component/notification/NotificationActions';
+import { showMessage } from './component/bpm-notification/NotificationActions';
 
 export const startCreateSkill = () => (
   (dispatch) => {

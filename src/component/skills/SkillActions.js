@@ -1,6 +1,6 @@
-import { showMessage } from '../notification/NotificationActions';
-import { ErrorMessage } from '../../constants';
+import { showMessage } from '../bpm-notification/NotificationActions';
 import SkillsApi from '../skillsApi/SkillsApi';
+import { ErrorMessage } from '../bpm-notification/NotificationConstants';
 
 export const SkillAction = {
   ADD: 'SKILL_ADD',

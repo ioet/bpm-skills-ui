@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import MyTableCell from './MyTableCell';
+import MyTableCell from './BpmTableCell';
 import { hoverOut, hoverOver } from '../hover/HoverActions';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -11,9 +11,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-const MyTableCellContainer = connect(
+const BpmTableCellContainer = connect(
   null,
   mapDispatchToProps,
 )(MyTableCell);
 
-export default MyTableCellContainer;
+export default BpmTableCellContainer;

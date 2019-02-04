@@ -2,8 +2,8 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button/Button';
 import PropTypes from 'prop-types';
-import { FooterConst } from '../../constants';
-import { FooterStyles } from '../../styles';
+import { FooterConst } from './FooterConstants';
+import { FooterStyles } from './FooterStyles';
 
 const Footer = (props) => {
   const { classes } = props;

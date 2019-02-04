@@ -49,11 +49,12 @@ const CategorySelect = (props) => {
 
 CategorySelect.defaultProps = {
   categories: {},
+  selection: '',
 };
 
 CategorySelect.propTypes = {
   classes: PropTypes.object.isRequired,
-  selection: PropTypes.bool.isRequired,
+  selection: PropTypes.string,
   categories: PropTypes.object.isRequired,
   onCategorySelectionChange: PropTypes.func.isRequired,
 };

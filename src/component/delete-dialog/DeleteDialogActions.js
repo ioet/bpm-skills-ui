@@ -1,8 +1,8 @@
-import { ErrorMessage, NotificationMessage } from '../../constants';
 import SkillsApi from '../skillsApi/SkillsApi';
-import { showMessage } from '../notification/NotificationActions';
+import { showMessage } from '../bpm-notification/NotificationActions';
 import { SkillAction } from '../skills/SkillActions';
 import { getSkillIdsToDelete } from './DeleteDialogSelector';
+import { ErrorMessage, NotificationMessage } from '../bpm-notification/NotificationConstants';
 
 export const DeleteAction = {
   SHOW_DIALOG: 'SHOW_DIALOG',
