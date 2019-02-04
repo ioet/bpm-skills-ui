@@ -1,32 +1,22 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography/Typography';
-import AppBar from '@material-ui/core/AppBar/AppBar';
-import Toolbar from '@material-ui/core/Toolbar/Toolbar';
-import SkillListContainer from './component/skills/list/SkillListContainer';
+import React, { Fragment } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import NotificationContainer from './component/bpm-notification/NotificationContainer';
 import Footer from './component/bpm-footer/Footer';
-import { AppConstants } from './AppConstants';
-import DeleteDialogContainer from './component/delete-dialog/DeleteDialogContainer';
-import NewSkillButtonContainer from './component/skills/create/NewSkillButtonContainer';
-import { startCreateSkill } from './component/skills/edit/EditSkillActions';
-import SkillFormDialogContainer from './component/skills/dialog-form/SkillFormDialogContainer';
+import SkillsLayout from './component/skills/SkillsLayout';
+import CategoriesLayout from './component/categories/CategoriesLayout';
 
 function App() {
   return (
     <div>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" color="inherit">
-            {AppConstants.APP_TITLE}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <NewSkillButtonContainer onClickCallback={startCreateSkill} />
-      <SkillListContainer />
+      <BrowserRouter>
+        <Fragment>
+          <Route exact path="/" component={SkillsLayout} />
+          <Route path="/categories" component={CategoriesLayout} />
+        </Fragment>
+      </BrowserRouter>
+
       <Footer />
       <NotificationContainer />
-      <DeleteDialogContainer />
-      <SkillFormDialogContainer />
     </div>
   );
 }

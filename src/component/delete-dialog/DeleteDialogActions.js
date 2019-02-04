@@ -1,18 +1,12 @@
-import SkillsApi from '../skillsApi/SkillsApi';
-import { showMessage } from '../bpm-notification/NotificationActions';
-import { SkillAction } from '../skills/SkillActions';
-import { getSkillIdsToDelete } from './DeleteDialogSelector';
-import { ErrorMessage, NotificationMessage } from '../bpm-notification/NotificationConstants';
-
 export const DeleteAction = {
   SHOW_DIALOG: 'SHOW_DIALOG',
   HIDE_DIALOG: 'HIDE_DIALOG',
 };
 
-export const showDeleteDialog = skillIds => ({
+export const showDeleteDialog = ids => ({
   type: DeleteAction.SHOW_DIALOG,
   open: true,
-  skillIds,
+  ids,
 });
 
 export const hideDeleteDialog = () => ({
@@ -20,27 +14,9 @@ export const hideDeleteDialog = () => ({
   open: false,
 });
 
-const removeSkill = skillId => ({
-  type: SkillAction.REMOVE,
-  skillId,
-});
-
-export const removeSkills = () => ((dispatch, getState) => {
-  const skillIds = getSkillIdsToDelete(getState());
-  skillIds.forEach((id) => {
-    new SkillsApi().deleteSkill(id)
-      .then(() => {
-        dispatch(showMessage(getState().skillList[id].name + NotificationMessage.SKILL_DELETED_SUCCESSFULLY));
-        dispatch(removeSkill(id));
-      })
-      .catch((error) => {
-        dispatch(showMessage(`${ErrorMessage.FAILED_TO_REMOVE_SKILL}: ${error}`));
-      });
-  });
-});
-
-export const handleCloseDeleteDialog = confirmed => ((dispatch) => {
+export const handleCloseDeleteDialog = (confirmed, onConfirm) => ((dispatch) => {
   if (confirmed) {
-    dispatch(removeSkills());
+    dispatch(onConfirm());
   }
+  dispatch(hideDeleteDialog());
 });

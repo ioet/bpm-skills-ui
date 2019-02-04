@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Edit } from '@material-ui/icons';
-import { getHoverId, isHoverActive } from '../../hover/HoverSelector';
-import BpmIconButton from '../../bpm-buttons/BpmIconButton';
-import { editSkill } from '../edit/EditSkillActions';
-import { EDIT } from './SkillListConstants';
+import { getHoverId, isHoverActive } from '../hover/HoverSelector';
+import BpmIconButton from './BpmIconButton';
+import { EDIT } from './BpmIconButtonConstants';
 
 const mapStateToProps = state => ({
   hover: isHoverActive(state),
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClickCallback: () => {
-    dispatch(editSkill(ownProps.itemId));
+    dispatch(ownProps.onEdit(ownProps.itemId));
   },
 });
 
@@ -23,5 +23,9 @@ const BpmEditButtonContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(BpmIconButton);
+
+BpmEditButtonContainer.propTypes = {
+  onEdit: PropTypes.func.isRequired,
+};
 
 export default BpmEditButtonContainer;

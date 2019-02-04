@@ -2,18 +2,20 @@ import { showMessage } from '../bpm-notification/NotificationActions';
 import SkillsApi from '../skillsApi/SkillsApi';
 import { ErrorMessage } from '../bpm-notification/NotificationConstants';
 
-export const CategoriesAction = {
+export const CategoryAction = {
   ADD: 'CATEGORY_ADD',
-  EDIT_START: 'CATEGORY_EDIT_START',
-  EDIT_END: 'CATEGORY_EDIT_END',
-  EDIT_DATA: 'CATEGORY_EDIT_DATA',
   UPDATE: 'CATEGORY_UPDATE',
   REMOVE: 'CATEGORY_REMOVE',
 };
 
-const addCategories = allCategories => ({
-  type: CategoriesAction.ADD,
+export const addCategories = allCategories => ({
+  type: CategoryAction.ADD,
   categories: allCategories,
+});
+
+export const updateCategoryInList = categoryToUpdate => ({
+  type: CategoryAction.UPDATE,
+  category: categoryToUpdate,
 });
 
 export const getAllCategories = () => (

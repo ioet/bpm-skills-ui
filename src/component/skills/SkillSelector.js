@@ -1,1 +1,1 @@
-export const getSkillById = (state, skillId) => (state.skillList[skillId]);
+export const getSkillById = (state, skillId) => state.skillList[skillId];

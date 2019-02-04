@@ -1,18 +1,18 @@
 import { arrayToObject } from '../utils/Utils';
-import { CategoriesAction } from './CategoriesActions';
+import { CategoryAction } from './CategoryActions';
 
 const categoryList = (state = {}, action) => {
   const copy = Object.assign({}, state);
   switch (action.type) {
-    case CategoriesAction.ADD:
+    case CategoryAction.ADD:
       return {
         ...state,
         ...arrayToObject(action.categories, 'id'),
       };
-    case CategoriesAction.UPDATE:
+    case CategoryAction.UPDATE:
       copy[action.category.id] = action.category;
       return { ...copy };
-    case CategoriesAction.REMOVE:
+    case CategoryAction.REMOVE:
       delete copy[action.categoryId];
       return { ...copy };
     default:

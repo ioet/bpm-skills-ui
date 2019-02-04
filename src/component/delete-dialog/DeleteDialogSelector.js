@@ -1,14 +1,27 @@
 import DeleteDialogConst from './DeleteDialogConstants';
 
+export const isDialogOpen = state => state.deleteReducer.open;
+
 export const getSkillNameToDelete = (state) => {
-  const { skillIds } = state.skillDelete;
+  const { ids } = state.deleteReducer;
   let skillName = '';
-  if (typeof skillIds !== 'undefined') {
-    skillName = (skillIds.length > 1)
-      ? skillIds.length + DeleteDialogConst.CONTENT_TEXT_MULTI_SKILL
-      : state.skillList[skillIds].name;
+  if (typeof ids !== 'undefined') {
+    skillName = (ids.length > 1)
+      ? ids.length + DeleteDialogConst.CONTENT_TEXT_MULTI_SKILL
+      : state.skillList[ids].name;
   }
   return skillName;
 };
 
-export const getSkillIdsToDelete = state => state.skillDelete.skillIds;
+export const getCategoryNameToDelete = (state) => {
+  const { ids } = state.deleteReducer;
+  let categoryName = '';
+  if (typeof ids !== 'undefined') {
+    categoryName = (ids.length > 1)
+      ? ids.length + DeleteDialogConst.CONTENT_TEXT_MULTI_CATEGORY
+      : state.categoryList[ids].name;
+  }
+  return categoryName;
+};
+
+export const getIdsToDelete = state => state.deleteReducer.ids;

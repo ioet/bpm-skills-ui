@@ -1,9 +1,15 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { SkillFormDialogLabels, SkillFormDialogNames } from './SkillFormDialogConstants';
 import { handleCloseFormDialog, setSkillEditData } from '../edit/EditSkillActions';
 import CategorySelectContainer from '../category-select/CategorySelectContainer';
 import BpmTextFieldContainer from '../../bpm-text-field/BpmTextFieldContainer';
+import { getCurrentEditSkill } from '../edit/EditSkillSelector';
+
+const mapStateToProps = state => ({
+  skill: getCurrentEditSkill(state),
+});
 
 const SkillFormDialogContent = (props) => {
   const { skill } = props;
@@ -48,4 +54,4 @@ SkillFormDialogContent.propTypes = {
   skill: PropTypes.object.isRequired,
 };
 
-export default SkillFormDialogContent;
+export default connect(mapStateToProps)(SkillFormDialogContent);

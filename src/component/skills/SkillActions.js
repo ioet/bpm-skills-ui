@@ -4,9 +4,6 @@ import { ErrorMessage } from '../bpm-notification/NotificationConstants';
 
 export const SkillAction = {
   ADD: 'SKILL_ADD',
-  EDIT_START: 'SKILL_EDIT_START',
-  EDIT_END: 'SKILL_EDIT_END',
-  EDIT_DATA: 'SKILL_EDIT_DATA',
   UPDATE: 'SKILL_UPDATE',
   REMOVE: 'SKILL_REMOVE',
 };

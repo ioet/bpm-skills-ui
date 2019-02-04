@@ -26,8 +26,21 @@ class SkillsApi {
     return this.skillsApi.delete(`${SKILLS}/${skillId}`);
   }
 
+
   getAllCategories() {
     return this.skillsApi.get(CATEGORIES);
+  }
+
+  createCategory(category) {
+    return this.skillsApi.post(CATEGORIES, category);
+  }
+
+  updateCategory(category) {
+    return this.skillsApi.put(`${CATEGORIES}/${category.id}`, category);
+  }
+
+  deleteCategory(categoryId) {
+    return this.skillsApi.delete(`${CATEGORIES}/${categoryId}`);
   }
 }
 

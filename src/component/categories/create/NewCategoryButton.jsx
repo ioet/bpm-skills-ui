@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
-import { NEW_SKILL_LABEL } from './NewSkillConstants';
+import { NEW_CATEGORY_LABEL } from './NewCategoryConstants';
 
-const NewSkillButton = (props) => {
+const NewCategoryButton = (props) => {
   const { onClickCallback } = props;
 
   return (
@@ -14,14 +14,14 @@ const NewSkillButton = (props) => {
         onClickCallback();
       }}
     >
-      {NEW_SKILL_LABEL}
+      {NEW_CATEGORY_LABEL}
     </Button>
   );
 };
 
 
-NewSkillButton.propTypes = {
+NewCategoryButton.propTypes = {
   onClickCallback: PropTypes.func.isRequired,
 };
 
-export default NewSkillButton;
+export default NewCategoryButton;

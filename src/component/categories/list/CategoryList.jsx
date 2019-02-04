@@ -5,21 +5,21 @@ import MUIDataTable from 'mui-datatables';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import { Delete } from '@material-ui/icons';
+import { CategoryListStyles } from './CategoryListStyles';
 import BpmTableCellContainer from '../../bpm-table-cell/BpmTableCellContainer';
-import BpmEditButtonContainer from '../../bpm-buttons/BpmEditButtonContainer';
-import { SkillListConst } from './SkillListConstants';
-import { SkillListStyles } from './SkillListStyles';
 import BpmDeleteButtonContainer from '../../bpm-buttons/BpmDeleteButtonContainer';
-import { editSkill } from '../edit/EditSkillActions';
+import { CategoryListConst } from './CategoryListConstants';
+import BpmEditButtonContainer from '../../bpm-buttons/BpmEditButtonContainer';
+import { editCategory } from '../edit/EditCategoryActions';
 
-const SkillList = (props) => {
+const CategoryList = (props) => {
   const {
-    classes, skillList, onRemoveSkills,
+    classes, categoryList, onRemoveCategories,
   } = props;
 
   const columns = [
     {
-      name: SkillListConst.COLUMN_ID,
+      name: CategoryListConst.COLUMN_ID,
       options: {
         display: 'excluded',
         filter: false,
@@ -28,7 +28,7 @@ const SkillList = (props) => {
       },
     },
     {
-      name: SkillListConst.COLUMN_NAME,
+      name: CategoryListConst.COLUMN_NAME,
       options: {
         customBodyRender: (value, tableMeta) => (
           <BpmTableCellContainer itemId={tableMeta.rowData[0]}>
@@ -38,27 +38,7 @@ const SkillList = (props) => {
       },
     },
     {
-      name: SkillListConst.COLUMN_LABEL,
-      options: {
-        customBodyRender: (value, tableMeta) => (
-          <BpmTableCellContainer itemId={tableMeta.rowData[0]}>
-            {value}
-          </BpmTableCellContainer>
-        ),
-      },
-    },
-    {
-      name: SkillListConst.COLUMN_CATEGORY,
-      options: {
-        customBodyRender: (value, tableMeta) => (
-          <BpmTableCellContainer itemId={tableMeta.rowData[0]}>
-            {value}
-          </BpmTableCellContainer>
-        ),
-      },
-    },
-    {
-      name: SkillListConst.COLUMN_BUSINESS_VALUE,
+      name: CategoryListConst.COLUMN_BUSINESS_VALUE,
       options: {
         filter: false,
         sort: false,
@@ -71,7 +51,7 @@ const SkillList = (props) => {
       },
     },
     {
-      name: SkillListConst.COLUMN_PREDICTIVE_VALUE,
+      name: CategoryListConst.COLUMN_PREDICTIVE_VALUE,
       options: {
         filter: false,
         sort: false,
@@ -84,18 +64,18 @@ const SkillList = (props) => {
       },
     },
     {
-      name: SkillListConst.COLUMN_EDIT,
+      name: CategoryListConst.COLUMN_EDIT,
       options: {
         filter: false,
         sort: false,
         download: false,
         customBodyRender: (value, tableMeta) => {
-          const skillId = tableMeta.rowData[0];
+          const categoryId = tableMeta.rowData[0];
           return (
-            <BpmTableCellContainer itemId={skillId}>
+            <BpmTableCellContainer itemId={categoryId}>
               <BpmEditButtonContainer
-                onEdit={editSkill}
-                itemId={skillId}
+                onEdit={editCategory}
+                itemId={categoryId}
               />
             </BpmTableCellContainer>
           );
@@ -103,17 +83,17 @@ const SkillList = (props) => {
       },
     },
     {
-      name: SkillListConst.COLUMN_DELETE,
+      name: CategoryListConst.COLUMN_DELETE,
       options: {
         filter: false,
         sort: false,
         download: false,
         customBodyRender: (value, tableMeta) => {
-          const skillId = tableMeta.rowData[0];
+          const categoryId = tableMeta.rowData[0];
           return (
-            <BpmTableCellContainer itemId={skillId}>
+            <BpmTableCellContainer itemId={categoryId}>
               <BpmDeleteButtonContainer
-                itemId={skillId}
+                itemId={categoryId}
               />
             </BpmTableCellContainer>
           );
@@ -132,8 +112,8 @@ const SkillList = (props) => {
       <IconButton
         onClick={(e) => {
           e.preventDefault();
-          const selectedSkillIds = selected.data.map(u => skillList[u.dataIndex][0]);
-          onRemoveSkills(selectedSkillIds);
+          const selectedCategoryIds = selected.data.map(u => categoryList[u.dataIndex][0]);
+          onRemoveCategories(selectedCategoryIds);
         }}
         className={classes.iconButton}
       >
@@ -145,7 +125,7 @@ const SkillList = (props) => {
   return (
     <div className={classes.root}>
       <MUIDataTable
-        data={skillList}
+        data={categoryList}
         columns={columns}
         options={options}
       />
@@ -153,10 +133,10 @@ const SkillList = (props) => {
   );
 };
 
-SkillList.propTypes = {
+CategoryList.propTypes = {
   classes: PropTypes.object.isRequired,
-  skillList: PropTypes.arrayOf(PropTypes.array).isRequired,
-  onRemoveSkills: PropTypes.func.isRequired,
+  categoryList: PropTypes.arrayOf(PropTypes.array).isRequired,
+  onRemoveCategories: PropTypes.func.isRequired,
 };
 
-export default withStyles(SkillListStyles)(SkillList);
+export default withStyles(CategoryListStyles)(CategoryList);

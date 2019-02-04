@@ -1,11 +1,11 @@
 import { DeleteAction } from './DeleteDialogActions';
 
-const skillDelete = (state = { open: false }, action) => {
+const deleteReducer = (state = { open: false }, action) => {
   switch (action.type) {
     case DeleteAction.SHOW_DIALOG:
       return {
         open: true,
-        skillIds: action.skillIds,
+        ids: action.ids,
       };
     case DeleteAction.HIDE_DIALOG:
       return {
@@ -17,4 +17,4 @@ const skillDelete = (state = { open: false }, action) => {
 };
 
 
-export default skillDelete;
+export default deleteReducer;

@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
@@ -61,5 +62,13 @@ module.exports = {
   plugins: [htmlWebpackPlugin, environmentVariables],
   resolve: {
     extensions: ['.js', '.jsx'],
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index_bundle.js',
+    publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true,
   },
 };

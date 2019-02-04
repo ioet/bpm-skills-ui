@@ -4,7 +4,7 @@ import { hoverOut, hoverOver } from '../hover/HoverActions';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onMouseOver: () => {
-    dispatch(hoverOver(ownProps.skillId));
+    dispatch(hoverOver(ownProps.itemId));
   },
   onMouseOut: () => {
     dispatch(hoverOut());

@@ -10,8 +10,8 @@ import 'typeface-roboto';
 import App from './App';
 import rootReducer from './RootReducer';
 import { getAllSkills } from './component/skills/SkillActions';
-import { getAllCategories } from './component/categories/CategoriesActions';
 import RootTheme from './AppStyles';
+import { getAllCategories } from './component/categories/CategoryActions';
 
 const store = createStore(
   rootReducer,
