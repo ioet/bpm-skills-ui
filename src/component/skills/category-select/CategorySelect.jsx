@@ -24,7 +24,7 @@ const mapCategoriesIntoSelect = (categories) => {
 
 const CategorySelect = (props) => {
   const {
-    classes, selection, categories, onCategorySelectionChange,
+    classes, selection, error, categories, onCategorySelectionChange,
   } = props;
   return (
     <FormControl className={classes.categorySelect}>
@@ -35,6 +35,7 @@ const CategorySelect = (props) => {
         margin="dense"
         value={selection}
         onChange={onCategorySelectionChange}
+        error={error}
         inputProps={{
           name: 'category_id',
           id: 'category',
@@ -48,13 +49,14 @@ const CategorySelect = (props) => {
 };
 
 CategorySelect.defaultProps = {
-  categories: {},
   selection: '',
+  error: false,
 };
 
 CategorySelect.propTypes = {
   classes: PropTypes.object.isRequired,
   selection: PropTypes.string,
+  error: PropTypes.bool,
   categories: PropTypes.object.isRequired,
   onCategorySelectionChange: PropTypes.func.isRequired,
 };

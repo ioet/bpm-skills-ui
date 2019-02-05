@@ -11,6 +11,10 @@ export const NotificationMessage = {
 
 export const PromptMessage = {
   ENTER_VALID_NAME: 'Please enter a valid name.',
+  ENTER_VALID_LABEL: 'Please enter a valid label',
+  ENTER_VALID_CATEGORY: 'Please choose a category',
+  ENTER_VALID_BUSINESS_VALUE: 'Please enter a valid business value',
+  ENTER_VALID_PREDICTIVE_VALUE: 'Please enter a valid predictive value',
 };
 
 export const ErrorMessage = {

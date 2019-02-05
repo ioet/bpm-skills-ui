@@ -27,7 +27,7 @@ const SkillFormDialogContent = (props) => {
         value={skill.label}
         onInputChange={setSkillEditData}
       />
-      <CategorySelectContainer onCategoryChange={setSkillEditData} />
+      <CategorySelectContainer onCategoryChange={setSkillEditData} name={SkillFormDialogNames.SKILL_CATEGORY} />
       <BpmTextFieldContainer
         name={SkillFormDialogNames.SKILL_BUSINESS_VALUE}
         label={SkillFormDialogLabels.SKILL_BUSINESS_VALUE_LABEL}

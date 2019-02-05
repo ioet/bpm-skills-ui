@@ -1,9 +1,4 @@
-import {
-  getCurrentEditCategory,
-  getCurrentEditcategory,
-  isCategoryCreation,
-  isSkillCreation
-} from './EditCategorySelector';
+import { getCurrentEditCategory, isCategoryCreation } from './EditCategorySelector';
 import { showMessage } from '../../bpm-notification/NotificationActions';
 import SkillsApi from '../../skillsApi/SkillsApi';
 import { FAILED_TO_CREATE_CATEGORY } from '../create/NewCategoryConstants';
@@ -43,13 +38,37 @@ export const stopEditCategory = () => ({
   type: EditCategoryAction.EDIT_END,
 });
 
-const isValidField = input => typeof input !== 'undefined' && input !== '';
+const isValidNumberInput = input => typeof input !== 'undefined' && input !== '' && typeof input === 'number';
+
+const isValidStringInput = input => typeof input !== 'undefined' && input !== '';
 
 const isInputValidCategory = (dispatch, category) => {
-  if (!isValidField(category.name)) {
-    dispatch(showMessage(PromptMessage.ENTER_VALID_NAME));
-    dispatch(setInputError(CategoryFormDialogNames.CATEGORY_NAME));
-    return false;
+  dispatch(removeAllInputErrors());
+
+  const NUMBER_FIELD_INDEX = 1;
+  const fieldNames = [
+    CategoryFormDialogNames.CATEGORY_NAME,
+    CategoryFormDialogNames.CATEGORY_BUSINESS_VALUE,
+    CategoryFormDialogNames.CATEGORY_PREDICTIVE_VALUE,
+  ];
+  const errorMessages = [
+    PromptMessage.ENTER_VALID_NAME,
+    PromptMessage.ENTER_VALID_BUSINESS_VALUE,
+    PromptMessage.ENTER_VALID_PREDICTIVE_VALUE,
+  ];
+  for (let i = 0; i < NUMBER_FIELD_INDEX; i++) {
+    if (!isValidStringInput(category[fieldNames[i]])) {
+      dispatch(showMessage(errorMessages[i]));
+      dispatch(setInputError(fieldNames[i]));
+      return false;
+    }
+  }
+  for (let i = NUMBER_FIELD_INDEX; i < fieldNames.length; i++) {
+    if (!isValidNumberInput(category[fieldNames[i]])) {
+      dispatch(showMessage(errorMessages[i]));
+      dispatch(setInputError(fieldNames[i]));
+      return false;
+    }
   }
   return true;
 };
@@ -65,8 +84,7 @@ export const createCategory = category => (
         dispatch(stopEditCategory());
         dispatch(addCategories([response.data]));
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         dispatch(showMessage(FAILED_TO_CREATE_CATEGORY));
       });
   }

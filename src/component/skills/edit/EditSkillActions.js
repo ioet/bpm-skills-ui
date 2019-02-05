@@ -38,13 +38,41 @@ export const stopEditSkill = () => ({
   type: EditSkillAction.EDIT_END,
 });
 
-const isValidField = input => typeof input !== 'undefined' && input !== '';
+const isValidNumberInput = input => typeof input !== 'undefined' && input !== '' && typeof input === 'number';
+
+const isValidStringInput = input => typeof input !== 'undefined' && input !== '';
 
 const isInputValidSkill = (dispatch, skill) => {
-  if (!isValidField(skill.name)) {
-    dispatch(showMessage(PromptMessage.ENTER_VALID_NAME));
-    dispatch(setInputError(SkillFormDialogNames.SKILL_NAME));
-    return false;
+  dispatch(removeAllInputErrors());
+
+  const NUMBER_FIELD_INDEX = 3;
+  const fieldNames = [
+    SkillFormDialogNames.SKILL_NAME,
+    SkillFormDialogNames.SKILL_LABEL,
+    SkillFormDialogNames.SKILL_CATEGORY,
+    SkillFormDialogNames.SKILL_BUSINESS_VALUE,
+    SkillFormDialogNames.SKILL_PREDICTIVE_VALUE,
+  ];
+  const errorMessages = [
+    PromptMessage.ENTER_VALID_NAME,
+    PromptMessage.ENTER_VALID_LABEL,
+    PromptMessage.ENTER_VALID_CATEGORY,
+    PromptMessage.ENTER_VALID_BUSINESS_VALUE,
+    PromptMessage.ENTER_VALID_PREDICTIVE_VALUE,
+  ];
+  for (let i = 0; i < NUMBER_FIELD_INDEX; i++) {
+    if (!isValidStringInput(skill[fieldNames[i]])) {
+      dispatch(showMessage(errorMessages[i]));
+      dispatch(setInputError(fieldNames[i]));
+      return false;
+    }
+  }
+  for (let i = NUMBER_FIELD_INDEX; i < fieldNames.length; i++) {
+    if (!isValidNumberInput(skill[fieldNames[i]])) {
+      dispatch(showMessage(errorMessages[i]));
+      dispatch(setInputError(fieldNames[i]));
+      return false;
+    }
   }
   return true;
 };
@@ -60,8 +88,7 @@ export const createSkill = skill => (
         dispatch(stopEditSkill());
         dispatch(addSkills([response.data]));
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         dispatch(showMessage(FAILED_TO_CREATE_SKILL));
       });
   }
