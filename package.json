@@ -1,14 +1,12 @@
 {
-  "name": "bpm-categories-ui",
+  "name": "bpm-skills-ui",
   "version": "1.0.0",
   "description": "In order to run the project:",
   "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
-    "test": "jest --coverage",
-    "generate-swagger-client": "./swagger-codegen/generate-client.sh",
-    "setup": "npm install && npm run generate-swagger-client"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -16,12 +14,13 @@
   "dependencies": {
     "@material-ui/core": "^3.3.1",
     "@material-ui/icons": "^3.0.1",
-    "mui-datatables": "^2.0.0-beta-32",
-    "jest-cli": "^23.6.0",
+    "axios": "latest",
+    "mui-datatables": "^2.0.0-beta-53",
     "prop-types": "15.6.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "typeface-roboto": "0.0.54",
@@ -29,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ioet/bpm-categories-ui.git"
+    "url": "git+https://github.com/ioet/bpm-skills-ui.git"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
@@ -59,8 +58,6 @@
     "react-scripts": "1.1.1",
     "redux-devtools-extension": "^2.13.5",
     "style-loader": "0.21.0",
-    "nock": "^10.0.2",
-    "redux-mock-store": "^1.5.3",
     "webpack": "^4.23.0",
     "webpack-cli": "3.1.0",
     "webpack-dev-server": "3.1.0"

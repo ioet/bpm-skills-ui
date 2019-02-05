@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
@@ -8,7 +9,7 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 
 const environmentVariables = new webpack.DefinePlugin({
   'process.env': {
-    // SOME_ENVIRONMENT_VARIABLE: JSON.stringify(process.env.SOME_ENVIRONMENT_VARIABLE),
+    BPM_SKILLS_API_URL: JSON.stringify(process.env.BPM_SKILLS_API_URL),
   },
 });
 
@@ -61,5 +62,13 @@ module.exports = {
   plugins: [htmlWebpackPlugin, environmentVariables],
   resolve: {
     extensions: ['.js', '.jsx'],
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index_bundle.js',
+    publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true,
   },
 };
