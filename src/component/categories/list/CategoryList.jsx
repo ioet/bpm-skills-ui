@@ -40,9 +40,6 @@ const CategoryList = (props) => {
     {
       name: CategoryListConst.COLUMN_BUSINESS_VALUE,
       options: {
-        filter: false,
-        sort: false,
-        download: false,
         customBodyRender: (value, tableMeta) => (
           <BpmTableCellContainer itemId={tableMeta.rowData[0]}>
             {value}
@@ -53,9 +50,6 @@ const CategoryList = (props) => {
     {
       name: CategoryListConst.COLUMN_PREDICTIVE_VALUE,
       options: {
-        filter: false,
-        sort: false,
-        download: false,
         customBodyRender: (value, tableMeta) => (
           <BpmTableCellContainer itemId={tableMeta.rowData[0]}>
             {value}
