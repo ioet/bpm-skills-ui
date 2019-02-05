@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { SkillFormDialogLabels, SkillFormDialogNames } from './SkillFormDialogConstants';
-import { handleCloseFormDialog, setSkillEditData } from '../edit/EditSkillActions';
+import { handleCloseSkillFormDialog, setSkillEditData } from '../edit/EditSkillActions';
 import CategorySelectContainer from '../category-select/CategorySelectContainer';
 import BpmTextFieldContainer from '../../bpm-text-field/BpmTextFieldContainer';
 import { getCurrentEditSkill } from '../edit/EditSkillSelector';
@@ -36,7 +36,7 @@ const SkillFormDialogContent = (props) => {
       />
       <form onSubmit={(e) => {
         e.preventDefault();
-        handleCloseFormDialog(true);
+        handleCloseSkillFormDialog(true);
       }}
       >
         <BpmTextFieldContainer

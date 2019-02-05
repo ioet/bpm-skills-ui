@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { SkillFormDialogConstants } from './SkillFormDialogConstants';
 import { isSkillDialogFormOpen } from '../edit/EditSkillSelector';
 import BpmDialog from '../../bpm-dialog/BpmDialog';
-import { handleCloseFormDialog } from '../edit/EditSkillActions';
+import { handleCloseSkillFormDialog } from '../edit/EditSkillActions';
 
 const mapStateToProps = state => ({
   open: isSkillDialogFormOpen(state),
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleClose: (confirmed) => {
-    dispatch(handleCloseFormDialog(confirmed));
+    dispatch(handleCloseSkillFormDialog(confirmed));
   },
 });
 

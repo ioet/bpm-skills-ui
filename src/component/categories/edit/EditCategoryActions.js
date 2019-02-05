@@ -7,6 +7,7 @@ import { CategoryFormDialogNames } from '../dialog-form/CategoryFormDialogConsta
 import { removeAllInputErrors, setInputError } from '../../bpm-text-field/BpmTextFieldActions';
 import { addCategories, updateCategoryInList } from '../CategoryActions';
 import { getCategoryById } from '../CategorySelector';
+import InputValidator from '../../bpm-text-field/InputValidator';
 
 export const EditCategoryAction = {
   EDIT_START: 'EDIT_START',
@@ -38,9 +39,10 @@ export const stopEditCategory = () => ({
   type: EditCategoryAction.EDIT_END,
 });
 
-const isValidNumberInput = input => typeof input !== 'undefined' && input !== '' && typeof input === 'number';
-
-const isValidStringInput = input => typeof input !== 'undefined' && input !== '';
+export const closeCategoryFormDialog = () => (dispatch) => {
+  dispatch(stopEditCategory());
+  dispatch(removeAllInputErrors());
+};
 
 const isInputValidCategory = (dispatch, category) => {
   dispatch(removeAllInputErrors());
@@ -56,15 +58,18 @@ const isInputValidCategory = (dispatch, category) => {
     PromptMessage.ENTER_VALID_BUSINESS_VALUE,
     PromptMessage.ENTER_VALID_PREDICTIVE_VALUE,
   ];
+
+  const inputValidator = new InputValidator();
+
   for (let i = 0; i < NUMBER_FIELD_INDEX; i++) {
-    if (!isValidStringInput(category[fieldNames[i]])) {
+    if (!inputValidator.isValidStringInput(category[fieldNames[i]])) {
       dispatch(showMessage(errorMessages[i]));
       dispatch(setInputError(fieldNames[i]));
       return false;
     }
   }
   for (let i = NUMBER_FIELD_INDEX; i < fieldNames.length; i++) {
-    if (!isValidNumberInput(category[fieldNames[i]])) {
+    if (!inputValidator.isValidNumberInput(category[fieldNames[i]])) {
       dispatch(showMessage(errorMessages[i]));
       dispatch(setInputError(fieldNames[i]));
       return false;
@@ -81,7 +86,7 @@ export const createCategory = category => (
 
     return new SkillsApi().createCategory(category)
       .then((response) => {
-        dispatch(stopEditCategory());
+        dispatch(closeCategoryFormDialog());
         dispatch(addCategories([response.data]));
       })
       .catch(() => {
@@ -97,8 +102,7 @@ export const updateCategory = category => ((dispatch) => {
 
   return new SkillsApi().updateCategory(category)
     .then((response) => {
-      dispatch(removeAllInputErrors());
-      dispatch(stopEditCategory());
+      dispatch(closeCategoryFormDialog());
       dispatch(updateCategoryInList(response.data));
       dispatch(showMessage(NotificationMessage.CHANGES_UPDATED_SUCCESSFULLY));
     })
@@ -107,12 +111,12 @@ export const updateCategory = category => ((dispatch) => {
     });
 });
 
-export const handleCloseFormDialog = confirmed => ((dispatch, getState) => {
+export const handleCloseCategoryFormDialog = confirmed => ((dispatch, getState) => {
   if (confirmed) {
     const state = getState();
     const category = getCurrentEditCategory(state);
     dispatch((isCategoryCreation(state)) ? createCategory(category) : updateCategory(category));
   } else {
-    dispatch(stopEditCategory());
+    dispatch(closeCategoryFormDialog());
   }
 });

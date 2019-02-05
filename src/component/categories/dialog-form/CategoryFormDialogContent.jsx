@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getCurrentEditCategory } from '../edit/EditCategorySelector';
 import BpmTextFieldContainer from '../../bpm-text-field/BpmTextFieldContainer';
 import { CategoryFormDialogLabels, CategoryFormDialogNames } from './CategoryFormDialogConstants';
-import { handleCloseFormDialog, setCategoryEditData } from '../edit/EditCategoryActions';
+import { handleCloseCategoryFormDialog, setCategoryEditData } from '../edit/EditCategoryActions';
 
 
 const mapStateToProps = state => ({
@@ -29,7 +29,7 @@ const CategoryFormDialogContent = (props) => {
       />
       <form onSubmit={(e) => {
         e.preventDefault();
-        handleCloseFormDialog(true);
+        handleCloseCategoryFormDialog(true);
       }}
       >
         <BpmTextFieldContainer

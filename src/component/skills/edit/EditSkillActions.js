@@ -7,6 +7,7 @@ import { getSkillById } from '../SkillSelector';
 import { removeAllInputErrors, setInputError } from '../../bpm-text-field/BpmTextFieldActions';
 import { ErrorMessage, NotificationMessage, PromptMessage } from '../../bpm-notification/NotificationConstants';
 import { SkillFormDialogNames } from '../dialog-form/SkillFormDialogConstants';
+import InputValidator from '../../bpm-text-field/InputValidator';
 
 export const EditSkillAction = {
   EDIT_START: 'EDIT_START',
@@ -38,9 +39,10 @@ export const stopEditSkill = () => ({
   type: EditSkillAction.EDIT_END,
 });
 
-const isValidNumberInput = input => typeof input !== 'undefined' && input !== '' && typeof input === 'number';
-
-const isValidStringInput = input => typeof input !== 'undefined' && input !== '';
+export const closeSkillFormDialog = () => (dispatch) => {
+  dispatch(stopEditSkill());
+  dispatch(removeAllInputErrors());
+};
 
 const isInputValidSkill = (dispatch, skill) => {
   dispatch(removeAllInputErrors());
@@ -60,15 +62,18 @@ const isInputValidSkill = (dispatch, skill) => {
     PromptMessage.ENTER_VALID_BUSINESS_VALUE,
     PromptMessage.ENTER_VALID_PREDICTIVE_VALUE,
   ];
+
+  const inputValidator = new InputValidator();
+
   for (let i = 0; i < NUMBER_FIELD_INDEX; i++) {
-    if (!isValidStringInput(skill[fieldNames[i]])) {
+    if (!inputValidator.isValidStringInput(skill[fieldNames[i]])) {
       dispatch(showMessage(errorMessages[i]));
       dispatch(setInputError(fieldNames[i]));
       return false;
     }
   }
   for (let i = NUMBER_FIELD_INDEX; i < fieldNames.length; i++) {
-    if (!isValidNumberInput(skill[fieldNames[i]])) {
+    if (!inputValidator.isValidNumberInput(skill[fieldNames[i]])) {
       dispatch(showMessage(errorMessages[i]));
       dispatch(setInputError(fieldNames[i]));
       return false;
@@ -85,7 +90,7 @@ export const createSkill = skill => (
 
     return new SkillsApi().createSkill(skill)
       .then((response) => {
-        dispatch(stopEditSkill());
+        dispatch(closeSkillFormDialog());
         dispatch(addSkills([response.data]));
       })
       .catch(() => {
@@ -101,8 +106,7 @@ export const updateSkill = skill => ((dispatch) => {
 
   return new SkillsApi().updateSkill(skill)
     .then((response) => {
-      dispatch(removeAllInputErrors());
-      dispatch(stopEditSkill());
+      dispatch(closeSkillFormDialog());
       dispatch(updateSkillInList(response.data));
       dispatch(showMessage(NotificationMessage.CHANGES_UPDATED_SUCCESSFULLY));
     })
@@ -111,12 +115,12 @@ export const updateSkill = skill => ((dispatch) => {
     });
 });
 
-export const handleCloseFormDialog = confirmed => ((dispatch, getState) => {
+export const handleCloseSkillFormDialog = confirmed => ((dispatch, getState) => {
   if (confirmed) {
     const state = getState();
     const skill = getCurrentEditSkill(state);
     dispatch((isSkillCreation(state)) ? createSkill(skill) : updateSkill(skill));
   } else {
-    dispatch(stopEditSkill());
+    dispatch(closeSkillFormDialog());
   }
 });

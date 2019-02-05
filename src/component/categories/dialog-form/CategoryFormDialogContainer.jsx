@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { isCategoryDialogFormOpen } from '../edit/EditCategorySelector';
 import { CategoryFormDialogConstants } from './CategoryFormDialogConstants';
-import { handleCloseFormDialog } from '../edit/EditCategoryActions';
+import { handleCloseCategoryFormDialog } from '../edit/EditCategoryActions';
 import BpmDialog from '../../bpm-dialog/BpmDialog';
 
 const mapStateToProps = state => ({
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleClose: (confirmed) => {
-    dispatch(handleCloseFormDialog(confirmed));
+    dispatch(handleCloseCategoryFormDialog(confirmed));
   },
 });
 
